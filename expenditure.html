@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Expenditure – Education Sector Integrated Dashboard</title>
+  <style>
+    :root{
+      --bg:#EAF3FB; --brand:#0B5FA5; --brand-2:#0066B3; --ink:#0B1F33; --muted:#5B6B7C;
+      --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
+      --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
+
+    /* Header */
+    .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
+    .title{font-weight:900;font-size:20px;line-height:1.1}
+    .subtitle{font-size:12px;opacity:.92;margin-top:3px}
+    .spacer{flex:1}
+    .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
+    .chip b{font-weight:900}
+    .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
+    .chip select option{color:#000}
+
+    /* Tabs */
+    .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;font-size:13px;cursor:pointer;user-select:none}
+    .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 72px - 54px)}
+
+    /* Left nav simplified */
+    .sidenav{background:var(--brand);padding:16px;color:#fff}
+    .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
+    .nav-info-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:14px;font-size:13px;line-height:1.5}
+    .nav-info-box b{display:block;margin-bottom:6px;font-size:14px}
+
+    /* Content */
+    .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
+    .section-header{display:flex;flex-direction:column;gap:6px}
+    .section-header h2{margin:0;font-size:22px}
+    .section-header .desc{color:var(--muted);font-size:13px}
+
+    /* KPI cards */
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-value{font-weight:1000;font-size:26px;margin-top:6px}
+    .kpi-sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+    /* Visual Panel */
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
+    .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+
+    .indicator-control{display:flex;align-items:center;gap:8px}
+    .indicator-control .lbl{background:rgba(207,229,247,.65);border:1px solid rgba(11,31,51,.10);border-radius:10px;padding:6px 10px;font-weight:900;color:#0B3A66;font-size:12px;white-space:nowrap}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;max-width:340px}
+
+    .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
+      display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
+    
+    .viz.map{height:400px; margin-bottom: 24px}
+
+    /* 3-Column Chart Stack */
+    .chart-stack{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px}
+    .viz.chart{height:180px}
+
+    .note{color:var(--muted);font-size:12px;margin-top:14px;font-style: italic}
+
+    @media (max-width:1400px){.chart-stack{grid-template-columns:repeat(2, 1fr)}}
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .chart-stack{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
+      <div class="subtitle">Expenditure – Financing and Resource Allocation</div>
+    </div>
+    <div class="spacer"></div>
+    <div style="display:flex; gap:10px; align-items:center">
+      <div class="chip"><b>Year</b><select id="yearSel"><option>2019</option><option>2021</option><option selected>2024</option></select></div>
+      <div class="chip"><b>Province</b><select id="provSel"><option selected>All Provinces</option><option>Kabul</option><option>Herat</option><option>Nangarhar</option></select></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="topTabs">
+    <div class="tab" data-page="overview">Overview</div>
+    <div class="tab" data-page="administrative">Administrative</div>
+    <div class="tab" data-page="survey">Survey</div>
+    <div class="tab" data-page="assessment">Assessment</div>
+    <div class="tab active" data-page="expenditure">Expenditure</div>
+    <div class="tab" data-page="monitoring">Progress Monitoring</div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidenav">
+      <div class="nav-title">Page Overview</div>
+      <div class="nav-info-box">
+        <b>Education Financing</b>
+        This page monitors how resources are allocated across provinces and education levels, tracking total spending and efficiency per student.
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="section-header">
+        <h2 id="sectionTitle">Financing and Resource Allocation</h2>
+        <div class="desc" id="sectionDesc">Strategic view of education expenditure, province-level distribution, and unit costs.</div>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="cards">
+        <div class="card">
+          <div class="kpi-title">Total Expenditure</div>
+          <div class="kpi-value">$215.4M</div>
+          <div class="kpi-sub">Total allocated budget</div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">Execution Rate</div>
+          <div class="kpi-value">84%</div>
+          <div class="kpi-sub">Spent vs Allocated</div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">Avg Spend per Student</div>
+          <div class="kpi-value">$42.00</div>
+          <div class="kpi-sub">Across all levels</div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">Funding Gap</div>
+          <div class="kpi-value">$34.2M</div>
+          <div class="kpi-sub">Identified deficit</div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h3 id="mapTitle">Map — Province Expenditure View</h3>
+          <div class="indicator-control">
+            <span class="lbl">Select Metric</span>
+            <select id="mapIndicatorSel">
+              <option>Total Education Expenditure</option>
+              <option>Expenditure per Student</option>
+              <option>Budget Execution %</option>
+              <option>Primary Level Spending</option>
+              <option>Secondary Level Spending</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="viz map" id="mapViz">Map placeholder</div>
+
+        <h3 id="chartsTitle">Financial Analytics & Trends</h3>
+        <div class="chart-stack" id="chartStack">
+          <!-- The charts requested -->
+          <div class="viz chart">Total Expenditure Trend<br>(Annual Growth)</div>
+          <div class="viz chart">Expenditure by Education Level<br>(Primary vs Secondary vs HE)</div>
+          <div class="viz chart">Expenditure by Province<br>(Top 10 Rankings)</div>
+          <div class="viz chart">Expenditure per Student<br>(Unit Cost by Level)</div>
+          <div class="viz chart">Salary vs. Non-Salary Ratio<br>(Operating Costs)</div>
+          <div class="viz chart">Budget Variance<br>(Allocated vs. Actual)</div>
+        </div>
+        
+        <div class="note">Data sources: Ministry of Finance (MoF) and EMIS integration. Figures are shown in USD/AFN based on regional reporting.</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const PAGE_URLS={overview:"index.html",administrative:"administrative.html",survey:"survey.html",assessment:"assessment.html",expenditure:"expenditure.html",monitoring:"monitoring.html"};
+    
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{
+      t.classList.toggle("active", t.dataset.page==="expenditure");
+      t.onclick=()=>window.location.href=PAGE_URLS[t.dataset.page];
+    });
+
+    const sel=$("mapIndicatorSel");
+    const mapViz=$("mapViz");
+
+    function updateMap() {
+      mapViz.textContent = `Geospatial Visualization: ${sel.value}\n(Province Data Layer)`;
+    }
+
+    sel.addEventListener("change", updateMap);
+    updateMap();
+
+    function $(id){ return document.getElementById(id); }
+  </script>
+</body>
+</html>

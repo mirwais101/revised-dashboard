@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Progress Monitoring – Education Sector Integrated Dashboard</title>
+  <style>
+    :root{
+      --bg:#EAF3FB; --brand:#0B5FA5; --brand-2:#0066B3; --ink:#0B1F33; --muted:#5B6B7C;
+      --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
+      --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
+
+    /* Header */
+    .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
+    .title{font-weight:900;font-size:20px;line-height:1.1}
+    .subtitle{font-size:12px;opacity:.92;margin-top:3px}
+    .spacer{flex:1}
+    .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
+    .chip b{font-weight:900}
+    .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
+    .chip select option{color:#000}
+
+    /* Tabs */
+    .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
+    .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
+
+    /* Left nav */
+    .sidenav{background:var(--brand);padding:16px;color:#fff}
+    .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.16);cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .nav-item .label{font-weight:900;font-size:13px;line-height:1.15}
+    .nav-item .hint{font-size:12px;opacity:.88;margin-top:4px;line-height:1.35}
+    .nav-item.active{background:#fff;color:#0B3A66;border-color:transparent;box-shadow:var(--shadow)}
+
+    /* Content */
+    .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
+    .section-header{display:flex;flex-direction:column;gap:6px}
+    .section-header h2{margin:0;font-size:22px}
+    .section-header .desc{color:var(--muted);font-size:13px;line-height:1.4}
+
+    /* KPI cards */
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-value{font-weight:1000;font-size:26px;margin-top:6px}
+    .kpi-sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+    /* Full Width Panel Area */
+    .main-grid{display:flex;flex-direction:column;gap:var(--gap)}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
+
+    .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+    .indicator-control{display:flex;align-items:center;gap:8px}
+    .indicator-control .lbl{background:rgba(207,229,247,.65);border:1px solid rgba(11,31,51,.10);border-radius:10px;padding:6px 10px;font-weight:900;color:#0B3A66;font-size:12px;white-space:nowrap}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;max-width:400px}
+
+    .viz{
+      border:1px dashed rgba(11,31,51,.28);
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
+      display:flex;align-items:center;justify-content:center;
+      color:rgba(11,31,51,.58);font-weight:700;font-size:13px;
+      text-align:center;padding:12px;white-space:pre-line
+    }
+    .viz.map{height:400px;margin-bottom:20px}
+
+    /* Multi-column chart layout */
+    .chart-stack{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px}
+    .viz.chart{height:180px}
+
+    .note{color:var(--muted);font-size:12px;margin-top:10px;line-height:1.4}
+
+    @media (max-width:1400px){.chart-stack{grid-template-columns:repeat(2, 1fr)}}
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .chart-stack{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
+      <div class="subtitle">Progress Monitoring – Implementation Tracking (Strategic Goals 1–3)</div>
+    </div>
+    <div class="spacer"></div>
+    <div style="display:flex; gap:10px; align-items:center">
+      <div class="chip"><b>Year</b>
+        <select id="yearSel"><option>2019</option><option>2021</option><option selected>2024</option></select>
+      </div>
+      <div class="chip"><b>Province</b>
+        <select id="provSel"><option selected>All Provinces</option><option>Kabul</option><option>Herat</option><option>Nangarhar</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs" id="topTabs">
+    <div class="tab" data-page="overview">Overview</div>
+    <div class="tab" data-page="administrative">Administrative</div>
+    <div class="tab" data-page="survey">Survey</div>
+    <div class="tab" data-page="assessment">Assessment</div>
+    <div class="tab" data-page="expenditure">Expenditure</div>
+    <div class="tab active" data-page="monitoring">Progress Monitoring</div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidenav">
+      <div class="nav-title">Monitoring – Strategic Goals</div>
+      <div class="nav-item active" data-section="sg1">
+        <div>
+          <div class="label">Strategic Goal 1 — Access & Participation</div>
+          <div class="hint">Enrollment • completion • girls’ access • CBE & transitions</div>
+        </div>
+        <div>›</div>
+      </div>
+      <div class="nav-item" data-section="sg2">
+        <div>
+          <div class="label">Strategic Goal 2 — Quality & Learning Support</div>
+          <div class="hint">Learning proficiency • textbooks • teacher training</div>
+        </div>
+        <div>›</div>
+      </div>
+      <div class="nav-item" data-section="sg3">
+        <div>
+          <div class="label">Strategic Goal 3 — System Strengthening</div>
+          <div class="hint">Community shuras • data systems • research studies</div>
+        </div>
+        <div>›</div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="section-header">
+        <h2 id="sectionTitle">Strategic Goal 1 — Access & Participation</h2>
+        <div class="desc" id="sectionDesc"></div>
+      </div>
+
+      <div class="cards" id="kpiRow"></div>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h3 id="mapTitle">Map — Province view</h3>
+            <div class="indicator-control">
+              <span class="lbl">Map Indicator</span>
+              <select id="mapIndicatorSel"></select>
+            </div>
+          </div>
+          <div class="viz map" id="mapViz">Map placeholder</div>
+
+          <h3 id="chartsTitle">Detailed Analytics & Trends</h3>
+          <div class="chart-stack" id="chartStack"></div>
+          <div class="note" id="chartsNote"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const PAGE_URLS = {
+      overview:"index.html",
+      administrative:"administrative.html",
+      survey:"survey.html",
+      assessment:"assessment.html",
+      expenditure:"expenditure.html",
+      monitoring:"monitoring.html"
+    };
+
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{
+      t.classList.toggle("active", t.dataset.page === "monitoring");
+      t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
+    });
+
+    const SECTIONS = {
+      sg1: {
+        title:"Strategic Goal 1 — Access & Participation",
+        desc:"Tracking implementation of programmes expanding access and pathways for formal and non-formal education.",
+        kpis: [
+          {name:"Learners Enrolled", value:"2.4M", sub:"Total across all levels"},
+          {name:"Primary Completion", value:"72%", sub:"Overall rate"},
+          {name:"Girls in Secondary", value:"(Data Restricted)", sub:"Secondary programmes"},
+          {name:"CBE Enrollment", value:"450k", sub:"Community-based education"}
+        ],
+        mapIndicators: [
+          "Enrollment density by province",
+          "Primary completion rate by province",
+          "CBE students by location",
+          "School facility improvement status",
+          "Transition rates to hub schools"
+        ],
+        charts: [
+          "Enrollment Trend (2019-2024)",
+          "Parity Index by Level",
+          "Completion Rates (Primary vs Secondary)",
+          "Improved vs. Degraded Facilities",
+          "CBE Enrollment by Age Group",
+          "Hub School Transition Success Rate",
+          "Literacy Course Completion by Gender",
+          "Vocational Training Participation",
+          "Regional Enrollment Distribution",
+          "Out-of-school Children Estimates"
+        ]
+      },
+      sg2: {
+        title:"Strategic Goal 2 — Quality & Learning Support",
+        desc:"Monitoring the quality of learning environments, availability of materials, and teacher capacity.",
+        kpis: [
+          {name:"Grade 3 Reading", value:"42%", sub:"Minimum proficiency"},
+          {name:"Grade 3 Math", value:"38%", sub:"Minimum proficiency"},
+          {name:"Textbook Access", value:"1:2", sub:"Student-to-book ratio"},
+          {name:"Teachers Trained", value:"12.5k", sub:"This academic year"}
+        ],
+        mapIndicators: [
+          "Reading proficiency by province",
+          "Math proficiency by province",
+          "Textbook distribution coverage",
+          "Teacher training workshop density"
+        ],
+        charts: [
+          "Reading Proficiency (Male vs Female)",
+          "Math Proficiency Trend",
+          "Textbook Availability by Grade",
+          "Teacher Guide Distribution %",
+          "Training Type Breakdown",
+          "Formative Assessment Adoption",
+          "Subject Proficiency Correlation",
+          "Teacher Attendance Trends"
+        ]
+      },
+      sg3: {
+        title:"Strategic Goal 3 — System Strengthening",
+        desc:"Evaluating governance, community engagement, and data system reliability.",
+        kpis: [
+          {name:"Active Shuras", value:"84%", sub:"Parent/Community councils"},
+          {name:"Data Systems", value:"4", sub:"Active EMIS/Dashboards"},
+          {name:"Studies Done", value:"12", sub:"National assessments"},
+          {name:"Reporting Rate", value:"92%", sub:"Monthly data submission"}
+        ],
+        mapIndicators: [
+          "Shura activity level by province",
+          "EMIS reporting status by district",
+          "Research study geographic coverage"
+        ],
+        charts: [
+          "Shura Participation Trend",
+          "Data System Uptime/Usage",
+          "Assessment Themes Breakdown",
+          "Reporting Timeliness by Province",
+          "Community Support vs Enrollment Correlation",
+          "Sector Study Timeline"
+        ]
+      }
+    };
+
+    let current = "sg1";
+    const $ = (id)=>document.getElementById(id);
+
+    function renderKPIs(cfg){
+      const row = $("kpiRow");
+      row.innerHTML = "";
+      cfg.kpis.forEach(k=>{
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="kpi-title">${k.name}</div>
+          <div class="kpi-value">${k.value}</div>
+          <div class="kpi-sub">${k.sub}</div>
+        `;
+        row.appendChild(el);
+      });
+    }
+
+    function renderMap(cfg){
+      $("mapTitle").textContent = `Map — ${cfg.title}`;
+      const sel = $("mapIndicatorSel");
+      sel.innerHTML = "";
+      cfg.mapIndicators.forEach(n=>{
+        const opt = document.createElement("option");
+        opt.value = n; opt.textContent = n;
+        sel.appendChild(opt);
+      });
+      const update = ()=> {
+        $("mapViz").textContent = `Geospatial Visualization:\n${sel.value}\n(Interactive Map Module)`;
+      };
+      sel.onchange = update;
+      update();
+    }
+
+    function renderCharts(cfg){
+      const stack = $("chartStack");
+      stack.innerHTML = "";
+      cfg.charts.forEach(t=>{
+        const v = document.createElement("div");
+        v.className = "viz chart";
+        v.textContent = `${t}\n(Visual Data)`;
+        stack.appendChild(v);
+      });
+      $("chartsNote").textContent = `Showing analytics for Year: ${$("yearSel").value} | Province: ${$("provSel").value}. Data sources include EMIS and implementing partner reports.`;
+    }
+
+    function render(){
+      const cfg = SECTIONS[current];
+      $("sectionTitle").textContent = cfg.title;
+      $("sectionDesc").textContent = cfg.desc;
+      renderKPIs(cfg);
+      renderMap(cfg);
+      renderCharts(cfg);
+    }
+
+    document.querySelectorAll(".nav-item").forEach(item=>{
+      item.addEventListener("click", ()=>{
+        document.querySelectorAll(".nav-item").forEach(i=>i.classList.remove("active"));
+        item.classList.add("active");
+        current = item.dataset.section;
+        render();
+      });
+    });
+
+    $("yearSel").addEventListener("change", render);
+    $("provSel").addEventListener("change", render);
+
+    render();
+  </script>
+</body>
+</html>

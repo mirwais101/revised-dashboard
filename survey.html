@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Survey – Education Sector Integrated Dashboard</title>
+  <style>
+    :root{
+      --bg:#EAF3FB; --brand:#0B5FA5; --brand-2:#0066B3; --ink:#0B1F33; --muted:#5B6B7C;
+      --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
+      --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
+
+    /* Header */
+    .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
+    .title{font-weight:900;font-size:20px;line-height:1.1}
+    .subtitle{font-size:12px;opacity:.92;margin-top:3px}
+    .spacer{flex:1}
+    .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
+    .chip b{font-weight:900}
+    .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
+    .chip select option{color:#000}
+
+    /* Tabs */
+    .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
+    .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 72px - 54px)}
+
+    /* Left nav */
+    .sidenav{background:var(--brand);padding:16px;color:#fff}
+    .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.16);cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .nav-item .label{font-weight:900;font-size:13px}
+    .nav-item .hint{font-size:12px;opacity:.88}
+    .nav-item.active{background:#fff;color:#0B3A66;border-color:transparent;box-shadow:var(--shadow)}
+
+    /* Content */
+    .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
+    .section-header{display:flex;flex-direction:column;gap:6px}
+    .section-header h2{margin:0;font-size:22px}
+    .section-header .desc{color:var(--muted);font-size:13px}
+
+    /* KPI cards */
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-value{font-weight:1000;font-size:26px;margin-top:6px}
+    .kpi-sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+    /* Main visual panel */
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
+
+    .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+    .indicator-control{display:flex;align-items:center;gap:8px}
+    .indicator-control .lbl{background:rgba(207,229,247,.65);border:1px solid rgba(11,31,51,.10);border-radius:10px;padding:6px 10px;font-weight:900;color:#0B3A66;font-size:12px;white-space:nowrap}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;max-width:340px}
+
+    .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
+      display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
+    
+    .viz.map{height:400px; margin-bottom: 24px}
+
+    /* 3-Column Chart Stack */
+    .chart-stack{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px}
+    .viz.chart{height:180px}
+
+    .note{color:var(--muted);font-size:12px;margin-top:10px;line-height:1.4;font-style: italic;}
+
+    @media (max-width:1400px){.chart-stack{grid-template-columns:repeat(2, 1fr)}}
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .chart-stack{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
+      <div class="subtitle">Survey – MICS (What is happening?) & WoAA (Why is it happening?)</div>
+    </div>
+    <div class="spacer"></div>
+    <div style="display:flex; gap:10px; align-items:center">
+      <div class="chip"><b>Year</b>
+        <select id="yearSel"><option>2019</option><option>2021</option><option selected>2024</option></select>
+      </div>
+      <div class="chip"><b>Province</b>
+        <select id="provSel"><option selected>All Provinces</option><option>Kabul</option><option>Herat</option><option>Nangarhar</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs" id="topTabs">
+    <div class="tab" data-page="overview">Overview</div>
+    <div class="tab" data-page="administrative">Administrative</div>
+    <div class="tab active" data-page="survey">Survey</div>
+    <div class="tab" data-page="assessment">Assessment</div>
+    <div class="tab" data-page="expenditure">Expenditure</div>
+    <div class="tab" data-page="monitoring">Progress Monitoring</div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidenav">
+      <div class="nav-title">Survey – Sources</div>
+      <div class="nav-item active" data-section="mics">
+        <div>
+          <div class="label">MICS</div>
+          <div class="hint">What is happening?</div>
+        </div>
+        <div>›</div>
+      </div>
+      <div class="nav-item" data-section="woaa">
+        <div>
+          <div class="label">WoAA</div>
+          <div class="hint">Why is it happening?</div>
+        </div>
+        <div>›</div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="section-header">
+        <h2 id="sectionTitle">MICS</h2>
+        <div class="desc" id="sectionDesc">Attendance, enrollment, OOSC, and completion metrics.</div>
+      </div>
+
+      <div class="cards" id="kpiRow"></div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h3 id="mapTitle">Map — Province view</h3>
+          <div class="indicator-control">
+            <span class="lbl">Select Metric</span>
+            <select id="mapIndicatorSel"></select>
+          </div>
+        </div>
+        <div class="viz map" id="mapViz">Map placeholder</div>
+
+        <h3 id="chartsTitle">Deep-Dive Analytics</h3>
+        <div class="chart-stack" id="chartStack"></div>
+        <div class="note" id="chartsNote"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const PAGE_URLS = {
+      overview:"index.html", administrative:"administrative.html", survey:"survey.html",
+      assessment:"assessment.html", expenditure:"expenditure.html", monitoring:"monitoring.html"
+    };
+    
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{
+      t.classList.toggle("active", t.dataset.page === "survey");
+      t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
+    });
+
+    const SECTIONS = {
+      mics: {
+        title:"MICS — Household Survey Data",
+        desc:"Quantifying attendance, enrollment, and completion rates (What is happening).",
+        kpis: [
+          {name:"Primary Attendance", value:"58%", sub:"ANAR - Primary"},
+          {name:"Overall Enrollment", value:"62%", sub:"National Avg"},
+          {name:"OOSC Rate", value:"34%", sub:"Out-of-School Children"},
+          {name:"Completion Rate", value:"72%", sub:"Primary Level"}
+        ],
+        mapIndicators: [
+          "Primary Net Attendance (ANAR)",
+          "Enrollment rate",
+          "Lower Secondary Attendance",
+          "Primary Out-of-School Rate",
+          "Primary Completion Rate",
+          "Reasons for non-attendance (Lack of facilities)"
+        ],
+        charts: [
+          "Attendance by Gender (M/F)",
+          "Enrollment by Level Breakdown",
+          "Secondary Attendance vs. Primary",
+          "OOSC Heatmap by District",
+          "Completion Rates Trend",
+          "Reasons for Non-Attendance (Top 5)",
+          "Rural vs Urban Attendance",
+          "Enrollment Gap Analysis",
+          "Age-Specific Attendance Curve"
+        ]
+      },
+      woaa: {
+        title:"WoAA — Whole of Afghanistan Assessment",
+        desc:"Analyzing household constraints, coping mechanisms, and access barriers (Why it is happening).",
+        kpis: [
+          {name:"Education as Priority", value:"Top 5", sub:"HH Challenges"},
+          {name:"Financial Withdrawals", value:"12%", sub:"Due to lack of funds"},
+          {name:"Coping - Labor", value:"8%", sub:"Children sent to work"},
+          {name:"Avg Ed Spend", value:"1.2k", sub:"AFN per household"}
+        ],
+        mapIndicators: [
+          "% HHs reporting Education as Top Challenge",
+          "% HHs withdrawing children for money/food",
+          "% HHs sent children to work",
+          "Average household spend on education",
+          "Female literacy rate at household level"
+        ],
+        charts: [
+          "Economic Challenges Ranking",
+          "Withdrawal Reasons breakdown",
+          "Household Spending Categories",
+          "Access Difficulty Heatmap",
+          "Child Labor Prevalence Trend",
+          "Female Educational Attainment in HH",
+          "Shock Vulnerability vs. Education",
+          "Distance to Facility Correlation",
+          "Coping Strategy Distribution"
+        ]
+      }
+    };
+
+    let current="mics";
+    const $ = (id)=>document.getElementById(id);
+
+    function renderKPIs(cfg){
+      const row=$("kpiRow");
+      row.innerHTML="";
+      cfg.kpis.forEach(k=>{
+        const el=document.createElement("div");
+        el.className="card";
+        el.innerHTML=`<div class="kpi-title">${k.name}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub">${k.sub}</div>`;
+        row.appendChild(el);
+      });
+    }
+
+    function renderMap(cfg){
+      $("mapTitle").textContent = `Map — ${cfg.title}`;
+      const sel=$("mapIndicatorSel");
+      sel.innerHTML="";
+      cfg.mapIndicators.forEach(n=>{
+        const opt=document.createElement("option");
+        opt.value=n; opt.textContent=n;
+        sel.appendChild(opt);
+      });
+      const update=()=>{$("mapViz").textContent = `Geographic Heatmap: ${sel.value}\n(Province Data Layer)`;};
+      sel.onchange=update; update();
+    }
+
+    function renderCharts(cfg){
+      const stack=$("chartStack");
+      stack.innerHTML="";
+      cfg.charts.forEach(t=>{
+        const v=document.createElement("div");
+        v.className="viz chart";
+        v.textContent=`${t}\n(Statistical Visualization)`;
+        stack.appendChild(v);
+      });
+      $("chartsNote").textContent = `Filtered by Year: ${$("yearSel").value} | Province: ${$("provSel").value}. Source: MICS/WoAA Survey Modules.`;
+    }
+
+    function render(){
+      const cfg=SECTIONS[current];
+      $("sectionTitle").textContent = cfg.title;
+      $("sectionDesc").textContent = cfg.desc;
+      renderKPIs(cfg);
+      renderMap(cfg);
+      renderCharts(cfg);
+    }
+
+    document.querySelectorAll(".nav-item").forEach(item=>{
+      item.addEventListener("click", ()=>{
+        document.querySelectorAll(".nav-item").forEach(i=>i.classList.remove("active"));
+        item.classList.add("active");
+        current=item.dataset.section;
+        render();
+      });
+    });
+
+    $("yearSel").addEventListener("change", render);
+    $("provSel").addEventListener("change", render);
+
+    render();
+  </script>
+</body>
+</html>
