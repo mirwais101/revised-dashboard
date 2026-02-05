@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Administrative – Education Sector Integrated Dashboard</title>
+  <title>Administrative – Education Sector Integrated Dashboard (LASER)</title>
   <style>
     :root{
       --bg:#EAF3FB; --brand:#0B5FA5; --brand-2:#0066B3; --ink:#0B1F33; --muted:#5B6B7C;
@@ -17,335 +17,348 @@
 
     /* Header */
     .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
-    .title{font-weight:900;font-size:20px;line-height:1.1}
+    .title{font-weight:900;font-size:18px;line-height:1.1}
     .subtitle{font-size:12px;opacity:.92;margin-top:3px}
     .spacer{flex:1}
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
-    .chip b{font-weight:900}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
-    .chip select option{color:#000}
 
-    /* Tabs */
+    /* LASER Navigation Tabs */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
-    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+    .tab b { color: #0B5FA5; margin-right:4px }
+    .tab.active b { color: #fff; opacity:0.8 }
 
     /* Layout */
-    .layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 72px - 54px)}
+    .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
 
-    /* Left nav */
+    /* Sidenav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
-    .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
-    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.16);cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .nav-title{font-weight:900;font-size:13px;opacity:.8;margin-bottom:12px;text-transform: uppercase;letter-spacing: 0.5px;}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
+    .nav-item.active{background:#fff;color:#0B3A66;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
-    .nav-item .hint{font-size:12px;opacity:.88}
-    .nav-item.active{background:#fff;color:#0B3A66;border-color:transparent;box-shadow:var(--shadow)}
+    .nav-item .hint{font-size:11px;opacity:0.7}
     .nav-item.active .hint{color:var(--muted);opacity:1}
+    .chevron-icon { width: 16px; height: 16px; flex-shrink: 0; stroke-width: 3; stroke: currentColor; fill:none;}
 
-    /* Content */
+    /* Content Area */
     .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
-
-    .section-header{display:flex;flex-direction:column;gap:10px}
-    .header-top{display:flex;flex-direction:column;gap:4px}
+    .section-header{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}
     .section-header h2{margin:0;font-size:22px}
     .section-header .desc{color:var(--muted);font-size:13px}
 
     /* Subtabs pills */
-    .subtabs{display:flex;gap:10px;flex-wrap:wrap}
-    .subtab{
-      background:rgba(255,255,255,.75);
-      border:1px solid rgba(11,31,51,.14);
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:900;
-      color:#0B3A66;
-      user-select:none;
-      cursor:pointer;
-      font-size:13px
-    }
-    .subtab.active{background:#fff;border-color:transparent;box-shadow:var(--shadow)}
+    .subtabs{display:flex;gap:8px;flex-wrap:wrap}
+    .subtab{background:rgba(255,255,255,.75);border:1px solid rgba(11,31,51,.14);padding:8px 12px;border-radius:999px;font-weight:900;color:#0B3A66;font-size:12px;cursor:pointer}
+    .subtab.active{background:var(--active);color:#fff;border-color:transparent}
 
-    /* KPI cards */
-    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+    /* KPI Cards */
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
-    .kpi-title{font-weight:900;color:#0B3A66;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
-    .kpi-value{font-weight:1000;font-size:26px;margin-top:6px}
-    .kpi-sub{color:var(--muted);font-size:12px;margin-top:2px}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
+    .kpi-sub{color:var(--muted);font-size:11px;margin-top:2px}
 
-    /* Main panels - Now Full Width */
-    .main-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
-    
+    /* Main Panel */
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
     .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-    .indicator-control{display:flex;align-items:center;gap:8px}
-    .indicator-control .lbl{background:rgba(207,229,247,.65);border:1px solid rgba(11,31,51,.10);border-radius:10px;padding:6px 10px;font-weight:900;color:#0B3A66;font-size:12px}
-    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;max-width:340px}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;width:350px}
 
-    .viz{
-      border:1px dashed rgba(11,31,51,.28);
-      border-radius:12px;
-      background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
-      display:flex;align-items:center;justify-content:center;
-      color:rgba(11,31,51,.58);
-      font-weight:700;
-      font-size:13px;
-      text-align:center;
-      padding:12px;
-      white-space:pre-line
-    }
-    .viz.map{height:400px; margin-bottom: 20px;}
+    .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
+      display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
+    
+    .viz.map{height:350px; margin-bottom: 24px}
 
-    /* 3-Column Chart Grid */
-    .chart-stack{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:14px}
-    .viz.chart{height:200px}
+    /* Grid for Charts */
+    .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
+    .chart-container{display:flex; flex-direction: column; gap: 8px}
+    .chart-label{font-size: 12px; font-weight: 800; color: var(--brand)}
+    .viz.chart{height:150px}
 
-    .note{color:var(--muted);font-size:12px;margin-top:14px;font-style: italic;}
+    .note{color:var(--muted);font-size:11px;margin-top:15px;font-style: italic; border-top: 1px solid #eee; padding-top: 10px;}
 
-    @media (max-width:1200px){.chart-stack{grid-template-columns:repeat(2, 1fr)}}
-    @media (max-width:900px){
-      .layout{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .chart-stack{grid-template-columns:1fr}
-    }
+    @media (max-width:1200px){ .chart-grid{grid-template-columns:1fr} .cards{grid-template-columns:repeat(3, 1fr)} }
   </style>
 </head>
 <body>
 
   <div class="topbar">
     <div>
-      <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
+      <div class="title">Afghanistan Education Integrated Dashboard</div>
       <div class="subtitle">Administrative – System inputs, structure, and capacity</div>
     </div>
     <div class="spacer"></div>
     <div style="display:flex; gap:10px; align-items:center">
-      <div class="chip"><b>Year</b><select id="yearSel"><option>2019</option><option>2021</option><option selected>2024</option></select></div>
-      <div class="chip"><b>Province</b><select id="provSel"><option selected>All Provinces</option><option>Kabul</option><option>Herat</option><option>Nangarhar</option></select></div>
+      <div class="chip"><b>Year</b> <select><option>2024</option><option>2021</option></select></div>
+      <div class="chip"><b>Province</b> <select><option>All Provinces</option></select></div>
     </div>
   </div>
 
   <div class="tabs" id="topTabs">
     <div class="tab" data-page="overview">Overview</div>
-    <div class="tab active" data-page="administrative">Administrative</div>
-    <div class="tab" data-page="survey">Survey</div>
-    <div class="tab" data-page="assessment">Assessment</div>
-    <div class="tab" data-page="expenditure">Expenditure</div>
-    <div class="tab" data-page="monitoring">Progress Monitoring</div>
+    <div class="tab" data-page="learning"><b>(L)</b> Learning</div>
+    <div class="tab active" data-page="administrative"><b>(A)</b> Administrative</div>
+    <div class="tab" data-page="survey"><b>(S)</b> Survey</div>
+    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
+    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
   </div>
 
   <div class="layout">
     <aside class="sidenav">
-      <div class="nav-title">Administrative – Programmes</div>
+      <div class="nav-title">System Categories</div>
+      
       <div class="nav-item active" data-section="ge">
-        <div><div class="label">General Education (GE)</div><div class="hint">Schools • Students • Teachers</div></div><div>›</div>
+        <div><div class="label">General Education (GE)</div><div class="hint">Schools, Students, Teachers</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
+      <div class="nav-item" data-section="sdg">
+        <div><div class="label">SDG 4 Indicators</div><div class="hint">Parity, GER, NER, Completion</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
       <div class="nav-item" data-section="cbe">
-        <div><div class="label">Community-Based Education (CBE)</div><div class="hint">Learning Centers • Learners • Ratios</div></div><div>›</div>
+        <div><div class="label">Community-Based (CBE)</div><div class="hint">Classes, Learners, Teachers</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="alp">
-        <div><div class="label">Accelerated Learning Programme (ALP)</div><div class="hint">Classes • Learners • Teachers</div></div><div>›</div>
+        <div><div class="label">Accelerated Learning (ALP)</div><div class="hint">Classes, Enrollment, Ratios</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="tvet">
-        <div><div class="label">TVET</div><div class="hint">Institutions • Students • STR</div></div><div>›</div>
+        <div><div class="label">TVET</div><div class="hint">Institutions & Enrollment</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
+      <div class="nav-item" data-section="ie">
+        <div><div class="label">Islamic Education</div><div class="hint">Madrassas, Staff, Students</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
       <div class="nav-item" data-section="he">
-        <div><div class="label">Higher Education (HE)</div><div class="hint">Universities • Academic staff</div></div><div>›</div>
+        <div><div class="label">Higher Education (HE)</div><div class="hint">Universities & Academic Staff</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </aside>
 
     <main class="content">
       <div class="section-header">
-        <div class="header-top">
-          <h2 id="sectionTitle">General Education (GE)</h2>
-          <div class="desc" id="sectionDesc">System inputs, structure, and capacity indicators.</div>
-        </div>
+        <h2 id="sectionTitle">General Education (GE)</h2>
+        <div class="desc" id="sectionDesc">System inputs, structure, and capacity indicators.</div>
         <div class="subtabs" id="subtabs"></div>
       </div>
 
       <div class="cards" id="kpiRow"></div>
 
-      <div class="main-panel">
+      <section class="panel">
         <div class="panel-header">
-          <h3 id="mapTitle">Map — Province View</h3>
+          <h3 style="margin:0; font-size:16px; color:var(--brand)" id="mapTitle">Provincial Map View</h3>
           <div class="indicator-control">
-            <span class="lbl">Select Indicator</span>
             <select id="mapIndicatorSel"></select>
           </div>
         </div>
 
-        <div class="viz map" id="mapViz">Map placeholder</div>
+        <div class="viz map" id="mapViz">Geographic Data Layer (Map)</div>
 
-        <h3 id="chartsTitle">Detailed Analytics</h3>
-        <div class="chart-stack" id="chartStack"></div>
+        <h3 style="margin:0 0 15px; font-size:16px; color:var(--brand)">Detailed Analytics</h3>
+        <div class="chart-grid" id="chartStack"></div>
         
-        <div class="note" id="detailsNote"></div>
-      </div>
+        <div class="note" id="detailsNote">
+            <b>Integrated Framework:</b> Data harmonized from MoE, MoHE, TVET, NSIA, and EMIS reporting.
+        </div>
+      </section>
     </main>
   </div>
 
   <script>
-    const PAGE_URLS = {
-      overview:"index.html", administrative:"administrative.html", survey:"survey.html",
-      assessment:"assessment.html", expenditure:"expenditure.html", monitoring:"monitoring.html"
-    };
+    const PAGE_URLS = { overview: "index.html", learning: "learning.html", administrative: "administrative.html", survey: "survey.html", expenditure: "expenditure.html", results: "results.html" };
     
     document.querySelectorAll("#topTabs .tab").forEach(t=>{
-      t.classList.toggle("active", t.dataset.page === "administrative");
       t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
     });
 
-    const SECTIONS = {
+    const DATA = {
       ge: {
         title: "General Education (GE)",
-        desc: "Structural and capacity indicators for GE schools.",
-        subtabs: ["Schools", "Students", "Teachers", "Facilities", "Derived indicators"],
+        desc: "System structure and capacity for formal GE schools.",
+        subtabs: ["Schools & Shifts", "Students", "Teachers", "Facilities"],
         content: {
-          "Schools": {
-            kpis: [{name:"Total schools", value:"18,452", sub:"Active institutions"}, {name:"Public Schools", value:"82%", sub:"Ownership share"}, {name:"Primary", value:"64%", sub:"Level distribution"}, {name:"Morning Shift", value:"55%", sub:"Capacity use"}],
-            mapIndicators: ["Total schools", "Schools by gender", "Schools by level", "Ownership: Public vs Private"],
-            charts: ["Schools by Education Level", "Schools by Gender Composition", "Ownership Distribution", "Instructional Shifts", "Regional School Density", "Facility Growth Trend"]
+          "Schools & Shifts": {
+            kpis: [{n:"Total Schools", v:"18,452"}, {n:"Primary", v:"11,800"}, {n:"Secondary", v:"4,100"}, {n:"High", v:"2,552"}, {n:"Private Share", v:"12%"}],
+            maps: ["Total schools by level", "Schools by gender", "Schools by ownership", "Institutions by shift"],
+            charts: ["Schools by Level (Primary/Sec/High)", "Ownership: Public vs Private", "Gender Composition (Boys/Girls/Mixed)", "Shift Distribution (Morning/Afternoon/Both)", "Schools by Province (Ranked)", "Annual Growth Trend"]
           },
           "Students": {
-            kpis: [{name:"Total enrollment", value:"9.2M", sub:"Enrollment 2024"}, {name:"Female %", value:"39%", sub:"Gender share"}, {name:"New Intake", value:"1.2M", sub:"Grade 1"}, {name:"OOSC Rate", value:"34%", sub:"National average"}],
-            mapIndicators: ["Enrollment density", "Female Enrollment %", "Returnees Enrolled", "Disability Inclusion"],
-            charts: ["Enrollment by Gender", "Enrollment by Grade Level", "Public vs Private Enrollment", "Vulnerable Groups Intake", "New Student Trends", "Student Geographic Spread"]
+            kpis: [{n:"Enrollment", v:"9.2M"}, {n:"Present", v:"7.8M"}, {n:"Female %", v:"39%"}, {n:"New Intake", v:"1.1M"}, {n:"Disability Enr.", v:"45k"}],
+            maps: ["Enrollment by Gender", "Enrollment by Ownership", "Present Students Count"],
+            charts: ["Enrollment by Grade Level", "Gender Breakdown by Province", "New Enrolled Students by Level", "Children with Disabilities Enrollment", "Returnees Enrolled by level", "Public vs Private Enrollment"]
           },
           "Teachers": {
-            kpis: [{name:"Total teachers", value:"210k", sub:"GE Staff"}, {name:"Female Teachers", value:"32%", sub:"Staff share"}, {name:"Qualified", value:"78%", sub:"Meet standards"}, {name:"STR", value:"44:1", sub:"Avg capacity"}],
-            mapIndicators: ["Teacher Distribution", "Female Teacher %", "Qualified Teacher %", "Teaching vs Admin Ratio"],
-            charts: ["Teachers by Qualification", "Gender Breakdown by Province", "Teacher-Student Ratio Heatmap", "Staff Training Status", "Subject Specialization", "Contractual vs Permanent"]
+            kpis: [{n:"Total Teachers", v:"210k"}, {n:"Female", v:"32%"}, {n:"Qualified", v:"78%"}, {n:"Permanent", v:"88%"}, {n:"Teacher:Admin", v:"4:1"}],
+            maps: ["Teachers by Gender", "Proportion of Qualified Teachers", "Teaching vs Non-Teaching Staff"],
+            charts: ["Teachers by Qualification", "Gender Breakdown by level", "Ownership: Public vs Private Staff", "Qualified Teachers by Gender", "Teaching vs Non-teaching Staff Ratio", "Staff Age Distribution"]
           },
           "Facilities": {
-            kpis: [{name:"Clean Water", value:"62%", sub:"Coverage"}, {name:"Toilets", value:"58%", sub:"Access"}, {name:"Electricity", value:"24%", sub:"Power access"}, {name:"Boundary Wall", value:"45%", sub:"Security"}],
-            mapIndicators: ["% Schools with Toilets", "% Schools with Water", "% Schools with Buildings", "% Schools with Security Walls"],
-            charts: ["WASH Coverage by Province", "Infrastructure Condition", "Power Access Comparison", "Lab/Library Availability", "Building Construction Status", "Sanitation Facility Types"]
+            kpis: [{n:"With Water", v:"62%"}, {n:"With Toilet", v:"58%"}, {n:"With Building", v:"71%"}, {n:"With Wall", v:"45%"}, {n:"With Electricity", v:"24%"}],
+            maps: ["% Schools with Drinking Water", "% Schools with Toilets", "% Schools with Buildings", "% Schools with Electricity"],
+            charts: ["Schools with/without Drinking Water", "Schools with/without Toilets", "Schools with/without Electricity", "Schools with/without Building", "Schools with/without Surrounding Wall", "Schools with/without Labs & Laboratory"]
+          }
+        }
+      },
+      sdg: {
+        title: "SDG 4 Indicators",
+        desc: "Key performance indicators for global education standards.",
+        subtabs: ["Access & Parity", "Efficiency & Quality"],
+        content: {
+          "Access & Parity": {
+            kpis: [{n:"GPI (GE)", v:"0.68"}, {n:"OOSC Rate", v:"34%"}, {n:"GER", v:"72%"}, {n:"NER", v:"55%"}, {n:"Literacy", v:"43%"}],
+            maps: ["GPI by Province", "OOSC Rate (%)", "GER by Province", "NER by Province"],
+            charts: ["GPI Trend (by Level & Ownership)", "GER vs NER Analysis", "Out-of-School Children Rate (%) by gender", "Literacy Rate Breakdown", "Completion Rate by level", "Gross Intake Rate Trend"]
           },
-          "Derived indicators": {
-            kpis: [{name:"GPI", value:"0.68", sub:"Gender Parity"}, {name:"GER", value:"72%", sub:"Gross Enrollment"}, {name:"NER", value:"55%", sub:"Net Enrollment"}, {name:"Drop-out", value:"12%", sub:"Annual rate"}],
-            mapIndicators: ["STR by Province", "GPI by Level", "NER by Province", "Completion Rate"],
-            charts: ["STR Comparison by Level", "GPI Trend Analysis", "GER vs NER Progress", "Completion Rate by Gender", "Drop-out Analysis", "Literacy Projections"]
+          "Efficiency & Quality": {
+            kpis: [{n:"STR (GE)", v:"44:1"}, {n:"Qualified", v:"78%"}, {n:"Drop-out", v:"12%"}, {n:"Completion", v:"65%"}, {n:"Teach:Non-Teach", v:"3.8"}],
+            maps: ["STR (General Education)", "Qualified Teacher Ratio", "Completion Rate (%)"],
+            charts: ["Student–Teacher Ratio (by level/gender/ownership)", "Percentage of schools with toilets (SDG)", "Percentage of schools with drinking water", "Percentage of schools with building", "Drop-out Rate by education level", "Ratio of teaching to non-teaching staff"]
           }
         }
       },
       cbe: {
         title: "Community-Based Education (CBE)",
-        desc: "CBE centers and learner analytics.",
-        subtabs: ["Learning centers", "Learners", "Teachers"],
+        desc: "Analytics for outreach and community learning centers.",
+        subtabs: ["Overview"],
         content: {
-          "Learning centers": {
-            kpis: [{name:"Active Classes", value:"22,400", sub:"Total CBE"}, {name:"Province Coverage", value:"34", sub:"Full reach"}, {name:"Rural Share", value:"92%", sub:"Location type"}, {name:"Partner Managed", value:"65%", sub:"Ops model"}],
-            mapIndicators: ["CBE Classes by Province", "Class Density", "New Centers 2024"],
-            charts: ["Classes by Province", "Annual Growth of Centers", "Remote Area Coverage", "Donor Distribution", "Class Size Averages", "Facility Status"]
-          },
-          "Learners": {
-            kpis: [{name:"Total Learners", value:"620k", sub:"CBE students"}, {name:"Female Learners", value:"55%", sub:"Gender parity"}, {name:"Avg Age", value:"9.2", sub:"Learner profile"}, {name:"OOSC Reach", value:"88%", sub:"Prior status"}],
-            mapIndicators: ["CBE Enrollment", "Female Learner %", "Learner Density"],
-            charts: ["Learner Gender Split", "Age Distribution", "Prior Education Status", "Regional Enrollment", "Enrollment Trend", "Disability in CBE"]
-          },
-          "Teachers": {
-            kpis: [{name:"CBE Teachers", value:"21k", sub:"Total staff"}, {name:"Female %", value:"48%", sub:"Gender share"}, {name:"Local Hires", value:"95%", sub:"Community based"}, {name:"STR", value:"30:1", sub:"Capacity"}],
-            mapIndicators: ["Teacher Distribution", "STR by Province"],
-            charts: ["Teacher Qualification", "Gender Breakdown", "STR Heatmap", "Local vs Relocated Staff", "Training Progress", "Staff Retention Rate"]
+          "Overview": {
+            kpis: [{n:"Total Classes", v:"22.4k"}, {n:"CBE Students", v:"620k"}, {n:"CBE Teachers", v:"21k"}, {n:"Stud/Class", v:"27"}, {n:"Stud/Teach", v:"29"}],
+            maps: ["Total CBE Classes", "CBE Student Density"],
+            charts: ["Total CBE classes", "Total CBE students", "Total CBE teachers", "Students per CBE classes", "Students per teachers", "CBE Progress by Region"]
           }
         }
       },
-      alp: { title: "ALP", desc: "Accelerated Learning indicators.", subtabs: ["Classes", "Learners"], content: { "Classes": { kpis: [{name:"ALP Classes", value:"4,200", sub:"Total"}], mapIndicators: ["Total Classes"], charts: ["Classes by Region", "Class Status", "Expansion Plan", "Space Utilization", "Province Share", "Trend"] }, "Learners": { kpis: [{name:"Enrollment", value:"120k", sub:"Total"}], mapIndicators: ["Learner Count"], charts: ["Age Group", "Gender", "Completion", "Prior Knowledge", "Drop-outs", "Success Rate"] } } },
-      tvet: { title: "TVET", desc: "Technical Vocational indicators.", subtabs: ["Institutions", "Students"], content: { "Institutions": { kpis: [{name:"Institutes", value:"380", sub:"Total"}], mapIndicators: ["Institutions by Province"], charts: ["TVET Type Breakdown", "Ownership", "Province Rank", "Infrastructure", "Trade Availability", "Growth"] }, "Students": { kpis: [{name:"Enrollment", value:"85k", sub:"Total"}], mapIndicators: ["Enrollment Density"], charts: ["Trade Popularity", "Gender Split", "Employment Rate", "Graduation Trend", "Public vs Private", "Certification Status"] } } },
-      he: { title: "Higher Education", desc: "University and Academic staff metrics.", subtabs: ["Universities", "Students"], content: { "Universities": { kpis: [{name:"Universities", value:"165", sub:"Total"}], mapIndicators: ["Uni Count by Province"], charts: ["Gov vs Private", "Regional Hubs", "Faculty Count", "Accreditation", "Growth Trend", "Capacity"] }, "Students": { kpis: [{name:"HE Students", value:"450k", sub:"Total"}], mapIndicators: ["Student Density"], charts: ["Major Selection", "Gender Trend", "Post-Grad Status", "Geographic Origin", "Degree Types", "Enrollment Rate"] } } }
+      alp: {
+        title: "Accelerated Learning Programme (ALP)",
+        desc: "Fast-track education for over-age children.",
+        subtabs: ["Overview"],
+        content: {
+          "Overview": {
+            kpis: [{n:"ALP Classes", v:"4,200"}, {n:"ALP Students", v:"120k"}, {n:"ALP Teachers", v:"4,100"}, {n:"Stud/Class", v:"28"}, {n:"Stud/Teach", v:"29"}],
+            maps: ["ALP Classes by Province", "ALP Enrollment"],
+            charts: ["Total ALP classes", "Total ALP students", "Total ALP teachers", "ALP Students per CBE classes", "ALP Students per teachers", "ALP Completion Rates"]
+          }
+        }
+      },
+      tvet: {
+        title: "TVET",
+        desc: "Technical and Vocational Education and Training.",
+        subtabs: ["Overview"],
+        content: {
+          "Overview": {
+            kpis: [{n:"Institutions", v:"380"}, {n:"TVET Schools", v:"210"}, {n:"Enrollment", v:"85k"}, {n:"Teachers", v:"6,200"}, {n:"STR", v:"14"}],
+            maps: ["TVET Institutions by Province", "TVET Enrollment"],
+            charts: ["Total TVET institutions", "Total TVET schools", "Total enrollment (gender/ownership)", "Total TVET teachers (gender/ownership)", "Student–Teacher Ratio", "TVET Trades Distribution"]
+          }
+        }
+      },
+      ie: {
+        title: "Islamic Education (IE)",
+        desc: "Madrassas and formal Islamic learning centers.",
+        subtabs: ["Overview"],
+        content: {
+          "Overview": {
+            kpis: [{n:"Institutions", v:"6,100"}, {n:"Teachers", v:"28k"}, {n:"Students", v:"450k"}, {n:"Female Students", v:"15%"}],
+            maps: ["IE Institutions by Province", "IE Student Density"],
+            charts: ["Total Islamic education institutions (level/ownership)", "Total teachers (level/gender/ownership)", "Total students (level/gender/ownership)", "IE Institutional Growth", "Teacher Qualification in Madrassas", "IE Student Attendance"]
+          }
+        }
+      },
+      he: {
+        title: "Higher Education (HE)",
+        desc: "University level data and academic staff.",
+        subtabs: ["Overview"],
+        content: {
+          "Overview": {
+            kpis: [{n:"Universities", v:"165"}, {n:"Enrollment", v:"450k"}, {n:"Teachers", v:"18k"}, {n:"Private Unis", v:"128"}, {n:"STR", v:"25"}],
+            maps: ["Uni Count by Province", "HE Student Density"],
+            charts: ["Total universities (private, government)", "Total enrollment (gender/ownership)", "Total teachers", "Student–Teacher Ratio", "Faculty Specialization", "Post-Graduation Trends"]
+          }
+        }
+      }
     };
 
     let currentSection = "ge";
-    let currentSubtab = null;
-    const $ = (id)=>document.getElementById(id);
+    let currentSubtab = "";
 
-    function renderSubtabs(sectionKey){
-      const sec = SECTIONS[sectionKey];
-      const container = $("subtabs");
+    function renderSubtabs(secKey) {
+      const container = document.getElementById("subtabs");
       container.innerHTML = "";
+      const sec = DATA[secKey];
       currentSubtab = sec.subtabs[0];
 
-      sec.subtabs.forEach(st=>{
-        const b = document.createElement("div");
-        b.className = "subtab" + (st === currentSubtab ? " active" : "");
-        b.textContent = st;
-        b.onclick = ()=>{
+      sec.subtabs.forEach(st => {
+        const div = document.createElement("div");
+        div.className = "subtab" + (st === currentSubtab ? " active" : "");
+        div.textContent = st;
+        div.onclick = () => {
           currentSubtab = st;
-          [...container.children].forEach(x=>x.classList.remove("active"));
-          b.classList.add("active");
-          renderFor(sectionKey, currentSubtab);
+          document.querySelectorAll(".subtab").forEach(x => x.classList.remove("active"));
+          div.classList.add("active");
+          updateContent();
         };
-        container.appendChild(b);
+        container.appendChild(div);
       });
     }
 
-    function renderKPIs(cfg){
-      const row = $("kpiRow");
-      row.innerHTML = "";
-      (cfg.kpis || []).forEach(k=>{
-        const el = document.createElement("div");
-        el.className = "card";
-        el.innerHTML = `
-          <div class="kpi-title">${k.name || "Indicator"}</div>
-          <div class="kpi-value">${k.value || "---"}</div>
-          <div class="kpi-sub">${k.sub || ""}</div>
-        `;
-        row.appendChild(el);
-      });
-    }
+    function updateContent() {
+      const sec = DATA[currentSection];
+      const sub = sec.content[currentSubtab];
+      document.getElementById("sectionTitle").textContent = sec.title;
+      document.getElementById("sectionDesc").textContent = sec.desc;
 
-    function renderMap(sec, cfg){
-      $("mapTitle").textContent = `Map — ${sec.title} • ${currentSubtab}`;
-      const sel = $("mapIndicatorSel");
+      // KPIs
+      const kpiRow = document.getElementById("kpiRow");
+      kpiRow.innerHTML = "";
+      sub.kpis.forEach(k => {
+        kpiRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div><div class="kpi-sub">National 2024</div></div>`;
+      });
+
+      // Map Dropdown
+      const sel = document.getElementById("mapIndicatorSel");
       sel.innerHTML = "";
-      (cfg.mapIndicators || ["No Data"]).forEach(n=>{
+      sub.maps.forEach(m => {
         const opt = document.createElement("option");
-        opt.value = n; opt.textContent = n;
+        opt.value = m; opt.textContent = m;
         sel.appendChild(opt);
       });
-      const update = ()=>{ $("mapViz").textContent = `Geographic Heatmap: ${sel.value}\n(Interactive Province Module)`; };
-      sel.onchange = update;
-      update();
-    }
 
-    function renderCharts(cfg){
-      const stack = $("chartStack");
+      // Charts
+      const stack = document.getElementById("chartStack");
       stack.innerHTML = "";
-      const charts = cfg.charts || [];
-      charts.forEach(t=>{
-        const v = document.createElement("div");
-        v.className = "viz chart";
-        v.textContent = `${t}\n(Visual Analytics)`;
-        stack.appendChild(v);
+      sub.charts.forEach((c, i) => {
+        stack.innerHTML += `
+          <div class="chart-container">
+            <div class="chart-label">${i+1}. ${c}</div>
+            <div class="viz chart">Chart Visualization: ${c}</div>
+          </div>
+        `;
       });
-      $("detailsNote").textContent = `* Filters apply: Year = ${$("yearSel").value}, Province = ${$("provSel").value}. Data is synchronized with latest EMIS reporting.`;
     }
 
-    function renderFor(sectionKey, subtab){
-      const sec = SECTIONS[sectionKey];
-      $("sectionTitle").textContent = sec.title;
-      $("sectionDesc").textContent = sec.desc;
-      const cfg = sec.content[subtab] || {};
-      renderKPIs(cfg);
-      renderMap(sec, cfg);
-      renderCharts(cfg);
-    }
-
-    function setSection(sectionKey){
-      currentSection = sectionKey;
-      renderSubtabs(sectionKey);
-      renderFor(sectionKey, currentSubtab);
-    }
-
-    document.querySelectorAll(".nav-item").forEach(item=>{
-      item.addEventListener("click", ()=>{
-        document.querySelectorAll(".nav-item").forEach(i=>i.classList.remove("active"));
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.onclick = () => {
+        document.querySelectorAll(".nav-item").forEach(i => i.classList.remove("active"));
         item.classList.add("active");
-        setSection(item.dataset.section);
-      });
+        currentSection = item.dataset.section;
+        renderSubtabs(currentSection);
+        updateContent();
+      };
     });
 
-    $("yearSel").addEventListener("change", ()=>renderFor(currentSection, currentSubtab));
-    $("provSel").addEventListener("change", ()=>renderFor(currentSection, currentSubtab));
-
-    setSection("ge");
+    // Initialize
+    renderSubtabs("ge");
+    updateContent();
   </script>
 </body>
 </html>
