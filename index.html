@@ -10,6 +10,8 @@
       --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
       --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      /* LASER Branding Colors */
+      --l-color: #00A88E; --a-color: #E31C52; --s-color: #78BE20; --e-color: #FF8200; --r-color: #0072CE;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -29,7 +31,14 @@
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
     .tab b { color: #0B5FA5; margin-right:4px }
     .tab.active b { color: #fff; opacity:0.8 }
-
+    /* LASER Colors */
+    .tab b { font-size: 15px; margin-right: 2px; }
+    .tab .l-text { color: var(--l-color); }
+    .tab .a-text { color: var(--a-color); }
+    .tab .s-text { color: var(--s-color); }
+    .tab .e-text { color: var(--e-color); }
+    .tab .r-text { color: var(--r-color); }
+    .tab.active b { filter: brightness(1.2) contrast(1.2); }
     /* Layout */
     .layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 72px - 54px)}
 
@@ -95,11 +104,11 @@
   <!-- LASER Sequence Horizontal Nav Bar -->
   <div class="tabs" id="topTabs">
     <div class="tab active" data-page="overview">Overview</div>
-    <div class="tab" data-page="learning"><b>(L)</b> Learning</div>
-    <div class="tab" data-page="administrative"><b>(A)</b> Administrative</div>
-    <div class="tab" data-page="survey"><b>(S)</b> Survey</div>
-    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
-    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
+    <div class="tab" data-page="learning"><b class="l-text">L</b>earning</div>
+    <div class="tab" data-page="administrative"><b class="a-text">A</b>dministrative</div>
+    <div class="tab" data-page="survey"><b class="s-text">S</b>urvey</div>
+    <div class="tab" data-page="expenditure"><b class="e-text">E</b>xpenditure</div>
+    <div class="tab" data-page="results"><b class="r-text">R</b>esults Monitoring</div>
   </div>
 
   <div class="layout">
