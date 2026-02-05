@@ -10,6 +10,13 @@
       --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
       --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      /* LASER Branding Colors */
+      --l-color: #00A88E; /* Teal-Green */
+      --a-color: #E31C52; /* Pink-Red */
+      --s-color: #78BE20; /* Lime-Green */
+      --e-color: #FF8200; /* Orange */
+      --r-color: #0072CE; /* Blue */
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -23,12 +30,21 @@
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
 
-    /* LASER Navigation Tabs */
+    /* Tabs Navigation */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
     .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
-    .tab b { color: #0B5FA5; margin-right:4px }
-    .tab.active b { color: #fff; opacity:0.8 }
+
+    /* Specific LASER Letter Coloring */
+    .tab b { font-size: 15px; margin-right: 2px; }
+    .tab .l-text { color: var(--l-color); }
+    .tab .a-text { color: var(--a-color); }
+    .tab .s-text { color: var(--s-color); }
+    .tab .e-text { color: var(--e-color); }
+    .tab .r-text { color: var(--r-color); }
+
+    /* Keep colored letters visible/bright when tab is active (blue) */
+    .tab.active b { filter: brightness(1.2) contrast(1.2); }
 
     /* Layout */
     .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
@@ -92,14 +108,14 @@
     </div>
   </div>
 
-  <!-- LASER Sequence Horizontal Nav Bar -->
+  <!-- LASER Sequence Horizontal Nav Bar with Branding -->
   <div class="tabs" id="topTabs">
     <div class="tab" data-page="overview">Overview</div>
-    <div class="tab" data-page="learning"><b>(L)</b> Learning</div>
-    <div class="tab" data-page="administrative"><b>(A)</b> Administrative</div>
-    <div class="tab active" data-page="survey"><b>(S)</b> Survey</div>
-    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
-    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
+    <div class="tab" data-page="learning"><b class="l-text">L</b>earning</div>
+    <div class="tab" data-page="administrative"><b class="a-text">A</b>dministrative</div>
+    <div class="tab active" data-page="survey"><b class="s-text">S</b>urvey</div>
+    <div class="tab" data-page="expenditure"><b class="e-text">E</b>xpenditure</div>
+    <div class="tab" data-page="results"><b class="r-text">R</b>esults Monitoring</div>
   </div>
 
   <div class="layout">
@@ -217,7 +233,6 @@
       document.getElementById("sectionTitle").textContent = data.title;
       document.getElementById("sectionDesc").textContent = data.desc;
       
-      // Update KPIs
       const kpiRow = document.getElementById("kpiRow");
       kpiRow.innerHTML = "";
       data.kpis.forEach(k => {
@@ -229,7 +244,6 @@
           </div>`;
       });
 
-      // Update Map Selector
       const sel = document.getElementById("mapIndicatorSel");
       sel.innerHTML = "";
       data.indicators.forEach(ind => {
@@ -238,7 +252,6 @@
         sel.appendChild(opt);
       });
 
-      // Update Chart Grid
       const stack = document.getElementById("chartStack");
       stack.innerHTML = "";
       data.indicators.forEach((ind, i) => {
@@ -263,7 +276,6 @@
       };
     });
 
-    // Initial Load
     render("mics");
   </script>
 </body>
