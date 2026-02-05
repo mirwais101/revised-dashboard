@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Overview – Education Sector Integrated Dashboard</title>
+  <title>Overview – Education Sector Integrated Dashboard (LASER)</title>
   <style>
     :root{
       --bg:#EAF3FB; --brand:#0B5FA5; --brand-2:#0066B3; --ink:#0B1F33; --muted:#5B6B7C;
@@ -17,46 +17,46 @@
 
     /* Header */
     .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
-    .title{font-weight:900;font-size:20px;line-height:1.1}
+    .title{font-weight:900;font-size:18px;line-height:1.1}
     .subtitle{font-size:12px;opacity:.92;margin-top:3px}
     .spacer{flex:1}
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
-    .chip b{font-weight:900}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
-    .chip select option{color:#000}
 
-    /* Top Horizontal Tabs */
+    /* LASER Navigation Tabs */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
-    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+    .tab b { color: #0B5FA5; margin-right:4px }
+    .tab.active b { color: #fff; opacity:0.8 }
 
     /* Layout */
     .layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 72px - 54px)}
 
-    /* Left nav */
+    /* Sidenav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
     .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
-    
-    /* Nav Item with your specific blue chevron */
     .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;color:#0B3A66;cursor:default;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
-    .nav-item .hint{font-size:12px;opacity:.88;color:var(--muted)}
-    .chevron-icon { width: 14px; height: 14px; color: #0B5FA5; flex-shrink: 0; }
+    .nav-item .hint{font-size:11px;color:var(--muted)}
+    
+    /* Specific Blue Chevron Symbol */
+    .chevron-icon { width: 16px; height: 16px; color: #0B5FA5; flex-shrink: 0; stroke-width: 3; }
 
     /* Content Area */
     .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
-    .section-header{display:flex;flex-direction:column;gap:6px}
+    .section-header{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
     .section-header h2{margin:0;font-size:22px}
     .section-header .desc{color:var(--muted);font-size:13px}
 
-    /* 5 KPI Cards Row */
+    /* 5 KPI Cards */
     .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
     .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
     .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
     .kpi-sub{color:var(--muted);font-size:11px;margin-top:2px}
 
-    /* Main bottom area */
+    /* Main Panel */
     .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
     .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
     .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
@@ -67,7 +67,7 @@
     
     .viz.map{height:350px; margin-bottom: 24px}
 
-    /* 2-Column Grid for 10 Charts */
+    /* Grid for 10 Charts */
     .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
     .chart-container{display:flex; flex-direction: column; gap: 8px}
     .chart-label{font-size: 13px; font-weight: 800; color: var(--brand)}
@@ -82,38 +82,35 @@
 
   <div class="topbar">
     <div>
-      <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
-      <div class="subtitle">Overview – Strategic Snapshot</div>
+      <div class="title">Afghanistan Education Integrated Dashboard</div>
+      <div class="subtitle">Evidence for Planning, Monitoring & Reporting</div>
     </div>
     <div class="spacer"></div>
     <div style="display:flex; gap:10px; align-items:center">
-      <div class="chip"><b>Year</b>
-        <select id="yearSel"><option selected>2024</option><option>2023</option></select>
-      </div>
-      <div class="chip"><b>Province</b>
-        <select id="provSel"><option selected>All Provinces</option><option>Kabul</option></select>
-      </div>
+      <div class="chip"><b>Year</b> <select><option>2024</option></select></div>
+      <div class="chip"><b>Province</b> <select><option>All Provinces</option></select></div>
     </div>
   </div>
 
+  <!-- LASER Sequence Horizontal Nav Bar -->
   <div class="tabs" id="topTabs">
-    <div class="tab active" data-page="overview">Overview (O)</div>
-    <div class="tab" data-page="administrative">Administrative (A)</div>
-    <div class="tab" data-page="survey">Survey (S)</div>
-    <div class="tab" data-page="assessment">Assessment (L)</div>
-    <div class="tab" data-page="expenditure">Expenditure (E)</div>
-    <div class="tab" data-page="monitoring">Monitoring (M)</div>
+    <div class="tab active" data-page="overview">Overview</div>
+    <div class="tab" data-page="learning"><b>(L)</b> Learning</div>
+    <div class="tab" data-page="administrative"><b>(A)</b> Administrative</div>
+    <div class="tab" data-page="survey"><b>(S)</b> Survey</div>
+    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
+    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
   </div>
 
   <div class="layout">
     <aside class="sidenav">
-      <div class="nav-title">Categories</div>
+      <div class="nav-title">Focus Category</div>
       <div class="nav-item">
         <div>
           <div class="label">Strategic Snapshot</div>
-          <div class="hint">Core Policy Monitoring</div>
+          <div class="hint">High-level Policy Summary</div>
         </div>
-        <!-- The specific blue chevron icon you provided -->
+        <!-- Left Panel Blue Chevron Icon -->
         <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -122,83 +119,88 @@
 
     <main class="content">
       <div class="section-header">
-        <h2 id="sectionTitle">Strategic Snapshot</h2>
-        <div class="desc">High-level policy snapshot for senior management and development partners.</div>
+        <h2>Strategic Snapshot</h2>
+        <div class="desc">Consolidated indicators for senior management and development partners.</div>
       </div>
 
-      <!-- 5 KPI Cards Row -->
+      <!-- 5 KPI Cards -->
       <div class="cards" id="kpiRow">
           <div class="card"><div class="kpi-title">GER</div><div class="kpi-value">54.2%</div><div class="kpi-sub">Gross Enrollment</div></div>
           <div class="card"><div class="kpi-title">NER</div><div class="kpi-value">41.8%</div><div class="kpi-sub">Net Enrollment</div></div>
           <div class="card"><div class="kpi-title">GPI (GE)</div><div class="kpi-value">0.68</div><div class="kpi-sub">Gender Parity</div></div>
           <div class="card"><div class="kpi-title">OOSC Rate</div><div class="kpi-value">34.0%</div><div class="kpi-sub">Out-of-School</div></div>
-          <div class="card" style="border-left: 4px solid #0078D4"><div class="kpi-title">Poverty Rate</div><div class="kpi-value">52.1%</div><div class="kpi-sub">HH Baseline</div></div>
+          <div class="card" style="border-left: 4px solid var(--active)"><div class="kpi-title">Poverty Rate</div><div class="kpi-value">52.1%</div><div class="kpi-sub">HH Baseline</div></div>
       </div>
 
       <section class="panel">
         <div class="panel-header">
-          <h3>Province Map Analysis</h3>
+          <h3>Provincial Performance Map</h3>
           <div class="indicator-control">
             <select id="mapIndicatorSel"></select>
           </div>
         </div>
 
-        <div class="viz map" id="mapViz">Afghanistan Geographic View (Map Layer)</div>
+        <div class="viz map" id="mapViz">Geographic Data Layer (Map)</div>
 
-        <h3>Indicator Analytics & Trends</h3>
-        <!-- Grid for 10 Charts -->
+        <h3>Policy Indicators Analytics (1-10)</h3>
+        <!-- Grid for 10 Indicators -->
         <div class="chart-grid" id="chartStack"></div>
         
         <div class="note">
-            <b>Source Harmonization:</b> Consolidating data from MoE, MoHE, TVET, NSIA, SLA, MICS, and WoAA.
+            <b>Integrated Framework:</b> Data harmonized from MoE, MoHE, TVET, NSIA, SLA, MICS, and WoAA. 
+            Expenditure data (E) shows national top-line figures only.
         </div>
       </section>
     </main>
   </div>
 
   <script>
+    // PAGE LINKS - DO NOT BREAK
     const PAGE_URLS = {
-      overview:"index.html", administrative:"administrative.html", survey:"survey.html",
-      assessment:"assessment.html", expenditure:"expenditure.html", monitoring:"monitoring.html"
+      overview: "index.html",
+      learning: "learning.html",
+      administrative: "administrative.html",
+      survey: "survey.html",
+      expenditure: "expenditure.html",
+      results: "results.html"
     };
     
     document.querySelectorAll("#topTabs .tab").forEach(t=>{
       t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
     });
 
+    // 10 MEASURABLE INDICATORS
     const INDICATORS = [
       "Gross Enrollment Rate (GER)",
       "Net Enrollment Rate (NER)",
       "Student–Teacher Ratio (GE)",
       "Gender Parity Index (GE)",
       "Poverty Rate",
-      "Returnee/IDPs Non-Attendance (%)",
+      "Returnee/IDPs Non-Attendance Rate (%)",
       "Schools with Drinking Water (%)",
       "Schools with Building (%)",
       "Out-of-School Children Rate (%)",
-      "Student–Teacher Ratio (General Ed)"
+      "Student–Teacher Ratio (General Education)"
     ];
 
-    const $ = (id)=>document.getElementById(id);
-
     function init(){
-      const sel = $("mapIndicatorSel");
-      const stack = $("chartStack");
+      const sel = document.getElementById("mapIndicatorSel");
+      const stack = document.getElementById("chartStack");
       
       INDICATORS.forEach((name, i)=>{
-        // Populate Map Dropdown
+        // Populate Dropdown
         const opt=document.createElement("option");
         opt.value=name; opt.textContent=name;
         sel.appendChild(opt);
 
-        // Generate 10 Chart Containers
+        // Generate Chart Grid
         const container = document.createElement("div");
         container.className = "chart-container";
-        container.innerHTML = `<div class="chart-label">${i+1}. ${name}</div><div class="viz chart">Visual Analytics:\n${name}</div>`;
+        container.innerHTML = `<div class="chart-label">${i+1}. ${name}</div><div class="viz chart">Chart Visualization:\n${name}</div>`;
         stack.appendChild(container);
       });
 
-      sel.onchange = () => $("mapViz").textContent = `Geographic Heatmap: ${sel.value}\n(Weighted Province Data)`;
+      sel.onchange = () => document.getElementById("mapViz").textContent = `Viewing Geographic Trends for: ${sel.value}`;
       sel.onchange();
     }
 
