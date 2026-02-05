@@ -25,7 +25,7 @@
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
     .chip select option{color:#000}
 
-    /* Tabs */
+    /* Top Horizontal Tabs */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
     .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
@@ -36,51 +36,46 @@
     /* Left nav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
     .nav-title{font-weight:900;font-size:14px;opacity:.95;margin-bottom:12px}
-    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.16);cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+    
+    /* Nav Item with your specific blue chevron */
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;color:#0B3A66;cursor:default;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
-    .nav-item .hint{font-size:12px;opacity:.88}
-    .nav-item.active{background:#fff;color:#0B3A66;border-color:transparent;box-shadow:var(--shadow)}
-    .nav-item.active .hint{color:var(--muted);opacity:1}
+    .nav-item .hint{font-size:12px;opacity:.88;color:var(--muted)}
+    .chevron-icon { width: 14px; height: 14px; color: #0B5FA5; flex-shrink: 0; }
 
-    /* Content */
+    /* Content Area */
     .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
     .section-header{display:flex;flex-direction:column;gap:6px}
     .section-header h2{margin:0;font-size:22px}
     .section-header .desc{color:var(--muted);font-size:13px}
 
-    /* KPI cards row */
-    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+    /* 5 KPI Cards Row */
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
-    .kpi-title{font-weight:900;color:#0B3A66;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
-    .kpi-value{font-weight:1000;font-size:26px;margin-top:6px}
-    .kpi-sub{color:var(--muted);font-size:12px;margin-top:2px}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
+    .kpi-sub{color:var(--muted);font-size:11px;margin-top:2px}
 
-    /* Main bottom area: Full width panel */
+    /* Main bottom area */
     .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
     .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
-
     .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-    .indicator-control{display:flex;align-items:center;gap:8px}
-    .indicator-control .lbl{background:rgba(207,229,247,.65);border:1px solid rgba(11,31,51,.10);border-radius:10px;padding:6px 10px;font-weight:900;color:#0B3A66;font-size:12px;white-space:nowrap}
-    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;max-width:320px}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;width:350px}
 
     .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
       display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
     
-    .viz.map{height:400px; margin-bottom: 24px}
+    .viz.map{height:350px; margin-bottom: 24px}
 
-    /* 3-Column Chart Layout */
-    .chart-stack{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px}
-    .viz.chart{height:180px}
+    /* 2-Column Grid for 10 Charts */
+    .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
+    .chart-container{display:flex; flex-direction: column; gap: 8px}
+    .chart-label{font-size: 13px; font-weight: 800; color: var(--brand)}
+    .viz.chart{height:150px}
 
-    .note{color:var(--muted);font-size:12px;margin-top:10px;line-height:1.4;font-style: italic;}
+    .note{color:var(--muted);font-size:11px;margin-top:15px;line-height:1.4;font-style: italic; border-top: 1px solid #eee; padding-top: 10px;}
 
-    @media (max-width:1400px){.chart-stack{grid-template-columns:repeat(2, 1fr)}}
-    @media (max-width:900px){
-      .layout{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .chart-stack{grid-template-columns:1fr}
-    }
+    @media (max-width:1200px){ .chart-grid{grid-template-columns:1fr} .cards{grid-template-columns:repeat(3, 1fr)} }
   </style>
 </head>
 <body>
@@ -88,78 +83,75 @@
   <div class="topbar">
     <div>
       <div class="title">Afghanistan Education Sector Integrated Dashboard</div>
-      <div class="subtitle">Overview – Strategic Snapshot (policy indicators)</div>
+      <div class="subtitle">Overview – Strategic Snapshot</div>
     </div>
     <div class="spacer"></div>
     <div style="display:flex; gap:10px; align-items:center">
       <div class="chip"><b>Year</b>
-        <select id="yearSel"><option>2019</option><option>2021</option><option selected>2024</option></select>
+        <select id="yearSel"><option selected>2024</option><option>2023</option></select>
       </div>
       <div class="chip"><b>Province</b>
-        <select id="provSel"><option selected>All Provinces</option><option>Kabul</option><option>Herat</option><option>Nangarhar</option></select>
+        <select id="provSel"><option selected>All Provinces</option><option>Kabul</option></select>
       </div>
     </div>
   </div>
 
   <div class="tabs" id="topTabs">
-    <div class="tab active" data-page="overview">Overview</div>
-    <div class="tab" data-page="administrative">Administrative</div>
-    <div class="tab" data-page="survey">Survey</div>
-    <div class="tab" data-page="assessment">Assessment</div>
-    <div class="tab" data-page="expenditure">Expenditure</div>
-    <div class="tab" data-page="monitoring">Progress Monitoring</div>
+    <div class="tab active" data-page="overview">Overview (O)</div>
+    <div class="tab" data-page="administrative">Administrative (A)</div>
+    <div class="tab" data-page="survey">Survey (S)</div>
+    <div class="tab" data-page="assessment">Assessment (L)</div>
+    <div class="tab" data-page="expenditure">Expenditure (E)</div>
+    <div class="tab" data-page="monitoring">Monitoring (M)</div>
   </div>
 
   <div class="layout">
     <aside class="sidenav">
-      <div class="nav-title">Overview – Sections</div>
-      <div class="nav-item active" data-section="snapshot">
+      <div class="nav-title">Categories</div>
+      <div class="nav-item">
         <div>
           <div class="label">Strategic Snapshot</div>
-          <div class="hint">Core policy indicators</div>
+          <div class="hint">Core Policy Monitoring</div>
         </div>
-        <div>›</div>
-      </div>
-      <div class="nav-item" data-section="equity">
-        <div>
-          <div class="label">Equity & Gender</div>
-          <div class="hint">Parity & access gaps</div>
-        </div>
-        <div>›</div>
-      </div>
-      <div class="nav-item" data-section="facilities">
-        <div>
-          <div class="label">Infrastructure & WASH</div>
-          <div class="hint">WASH & building status</div>
-        </div>
-        <div>›</div>
+        <!-- The specific blue chevron icon you provided -->
+        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </aside>
 
     <main class="content">
       <div class="section-header">
         <h2 id="sectionTitle">Strategic Snapshot</h2>
-        <div class="desc" id="sectionDesc">
-          High-level policy indicators for senior management and development partners.
-        </div>
+        <div class="desc">High-level policy snapshot for senior management and development partners.</div>
       </div>
 
-      <div class="cards" id="kpiRow"></div>
+      <!-- 5 KPI Cards Row -->
+      <div class="cards" id="kpiRow">
+          <div class="card"><div class="kpi-title">GER</div><div class="kpi-value">54.2%</div><div class="kpi-sub">Gross Enrollment</div></div>
+          <div class="card"><div class="kpi-title">NER</div><div class="kpi-value">41.8%</div><div class="kpi-sub">Net Enrollment</div></div>
+          <div class="card"><div class="kpi-title">GPI (GE)</div><div class="kpi-value">0.68</div><div class="kpi-sub">Gender Parity</div></div>
+          <div class="card"><div class="kpi-title">OOSC Rate</div><div class="kpi-value">34.0%</div><div class="kpi-sub">Out-of-School</div></div>
+          <div class="card" style="border-left: 4px solid #0078D4"><div class="kpi-title">Poverty Rate</div><div class="kpi-value">52.1%</div><div class="kpi-sub">HH Baseline</div></div>
+      </div>
 
       <section class="panel">
         <div class="panel-header">
-          <h3 id="mapTitle">Map — Province view</h3>
+          <h3>Province Map Analysis</h3>
           <div class="indicator-control">
-            <span class="lbl">Select Metric</span>
             <select id="mapIndicatorSel"></select>
           </div>
         </div>
 
-        <div class="viz map" id="mapViz">Map placeholder</div>
+        <div class="viz map" id="mapViz">Afghanistan Geographic View (Map Layer)</div>
 
-        <h3 id="chartsTitle">Strategic Analytics & Trends</h3>
-        <div class="chart-stack" id="chartStack"></div>
-        <div class="note">Data as of last reporting cycle. Filters apply to all visual components.</div>
+        <h3>Indicator Analytics & Trends</h3>
+        <!-- Grid for 10 Charts -->
+        <div class="chart-grid" id="chartStack"></div>
+        
+        <div class="note">
+            <b>Source Harmonization:</b> Consolidating data from MoE, MoHE, TVET, NSIA, SLA, MICS, and WoAA.
+        </div>
       </section>
     </main>
   </div>
@@ -171,143 +163,46 @@
     };
     
     document.querySelectorAll("#topTabs .tab").forEach(t=>{
-      t.classList.toggle("active", t.dataset.page === "overview");
       t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
     });
 
     const INDICATORS = [
+      "Gross Enrollment Rate (GER)",
+      "Net Enrollment Rate (NER)",
       "Student–Teacher Ratio (GE)",
       "Gender Parity Index (GE)",
+      "Poverty Rate",
+      "Returnee/IDPs Non-Attendance (%)",
+      "Schools with Drinking Water (%)",
+      "Schools with Building (%)",
       "Out-of-School Children Rate (%)",
-      "Schools with Functional Toilets (%)",
-      "Schools with Clean Water (%)",
-      "Schools with Permanent Buildings (%)"
+      "Student–Teacher Ratio (General Ed)"
     ];
 
-    const SECTIONS = {
-      snapshot: {
-        title:"Strategic Snapshot",
-        desc:"Snapshot of system health across core structural indicators.",
-        kpis:[
-          {name:"Student–Teacher Ratio", value:"42:1", sub:"National Avg"},
-          {name:"Gender Parity Index", value:"0.68", sub:"Target: 1.00"},
-          {name:"OOSC Rate", value:"34%", sub:"Estimated"},
-          {name:"Toilets Access", value:"58%", sub:"WASH Coverage"}
-        ],
-        mapIndicators: INDICATORS,
-        charts:[
-          "STR Comparison by Province",
-          "GPI Gap Analysis",
-          "OOSC National Trend",
-          "WASH Coverage Growth",
-          "Building Status Breakdown",
-          "Provincial Performance Rank",
-          "Teacher Distribution Equity",
-          "Enrollment vs Capacity Gap",
-          "Strategic Goal Progress"
-        ]
-      },
-      equity: {
-        title:"Equity & Gender",
-        desc:"Focus on gender parity and access gaps in the education system.",
-        kpis:[
-          {name:"GPI Enrollment", value:"0.68", sub:"General Education"},
-          {name:"Female OOSC Rate", value:"42%", sub:"Target group"},
-          {name:"Female Teacher %", value:"32%", sub:"Staff share"},
-          {name:"GPI Trend", value:"+0.02", sub:"Change since 2021"}
-        ],
-        mapIndicators: ["Gender Parity Index (GE)", "Out-of-School Children Rate (%)"],
-        charts:[
-          "GPI by Province (Bar)",
-          "OOSC Rate by Gender",
-          "Female Enrollment Progress",
-          "Gender Gap in Secondary Ed",
-          "Regional Equity Mapping",
-          "Enrollment Growth (Female)"
-        ]
-      },
-      facilities: {
-        title:"Infrastructure & WASH",
-        desc:"WASH and permanent infrastructure status across all provinces.",
-        kpis:[
-          {name:"Toilets Access", value:"58%", sub:"National Avg"},
-          {name:"Drinking Water", value:"62%", sub:"National Avg"},
-          {name:"Permanent Buildings", value:"45%", sub:"Construction status"},
-          {name:"Electricity Access", value:"24%", sub:"Infrastructure"}
-        ],
-        mapIndicators: ["Schools with Functional Toilets (%)", "Schools with Clean Water (%)", "Schools with Permanent Buildings (%)"],
-        charts:[
-          "Toilet Coverage Heatmap",
-          "Water Accessibility Trends",
-          "Building Type Distribution",
-          "Infrastructure Gap Index",
-          "WASH Investment Priority",
-          "Facility Condition Comparison"
-        ]
-      }
-    };
-
-    let current="snapshot";
     const $ = (id)=>document.getElementById(id);
 
-    function renderKPIs(cfg){
-      const row = $("kpiRow");
-      row.innerHTML="";
-      cfg.kpis.forEach(k=>{
-        const el=document.createElement("div");
-        el.className="card";
-        el.innerHTML=`<div class="kpi-title">${k.name}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub">${k.sub}</div>`;
-        row.appendChild(el);
-      });
-    }
-
-    function renderMap(cfg){
-      $("mapTitle").textContent = `Map — ${cfg.title}`;
+    function init(){
       const sel = $("mapIndicatorSel");
-      sel.innerHTML="";
-      cfg.mapIndicators.forEach(n=>{
+      const stack = $("chartStack");
+      
+      INDICATORS.forEach((name, i)=>{
+        // Populate Map Dropdown
         const opt=document.createElement("option");
-        opt.value=n; opt.textContent=n;
+        opt.value=name; opt.textContent=name;
         sel.appendChild(opt);
+
+        // Generate 10 Chart Containers
+        const container = document.createElement("div");
+        container.className = "chart-container";
+        container.innerHTML = `<div class="chart-label">${i+1}. ${name}</div><div class="viz chart">Visual Analytics:\n${name}</div>`;
+        stack.appendChild(container);
       });
-      const update=()=>{$("mapViz").textContent = `Geographic Heatmap: ${sel.value}\n(Province Data Layer)`;};
-      sel.onchange=update; update();
+
+      sel.onchange = () => $("mapViz").textContent = `Geographic Heatmap: ${sel.value}\n(Weighted Province Data)`;
+      sel.onchange();
     }
 
-    function renderCharts(cfg){
-      $("chartsTitle").textContent = `Analytics — ${cfg.title}`;
-      const stack=$("chartStack");
-      stack.innerHTML="";
-      cfg.charts.forEach(t=>{
-        const v=document.createElement("div");
-        v.className="viz chart";
-        v.textContent = `${t}\n(Statistical Visualization)`;
-        stack.appendChild(v);
-      });
-    }
-
-    function render(){
-      const cfg=SECTIONS[current];
-      $("sectionTitle").textContent = cfg.title;
-      $("sectionDesc").textContent = cfg.desc;
-      renderKPIs(cfg);
-      renderMap(cfg);
-      renderCharts(cfg);
-    }
-
-    document.querySelectorAll(".nav-item").forEach(item=>{
-      item.addEventListener("click", ()=>{
-        document.querySelectorAll(".nav-item").forEach(i=>i.classList.remove("active"));
-        item.classList.add("active");
-        current=item.dataset.section;
-        render();
-      });
-    });
-
-    $("yearSel").addEventListener("change", render);
-    $("provSel").addEventListener("change", render);
-
-    render();
+    init();
   </script>
 </body>
 </html>
