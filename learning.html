@@ -12,12 +12,17 @@
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       
       /* LASER Branding Colors */
-      --l-color: #00A88E; --a-color: #E31C52; --s-color: #78BE20; --e-color: #FF8200; --r-color: #0072CE;
+      --l-color: #00A88E; /* Teal-Green */
+      --a-color: #E31C52; /* Pink-Red */
+      --s-color: #78BE20; /* Lime-Green */
+      --e-color: #FF8200; /* Orange */
+      --r-color: #0072CE; /* Blue */
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
 
+    /* Header */
     .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
     .title{font-weight:900;font-size:18px;line-height:1.1}
     .subtitle{font-size:12px;opacity:.92;margin-top:3px}
@@ -25,37 +30,50 @@
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
 
+    /* Tabs Navigation */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
-    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
 
-    /* LASER Colors */
+    /* LASER Letter Coloring */
     .tab b { font-size: 15px; margin-right: 2px; }
     .tab .l-text { color: var(--l-color); }
     .tab .a-text { color: var(--a-color); }
     .tab .s-text { color: var(--s-color); }
     .tab .e-text { color: var(--e-color); }
     .tab .r-text { color: var(--r-color); }
+
+    /* Keep colored letters visible when tab is active (blue) */
     .tab.active b { filter: brightness(1.2) contrast(1.2); }
 
+    /* Layout */
     .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
+    
+    /* Sidenav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
     .nav-title{font-weight:900;font-size:13px;opacity:.8;margin-bottom:12px;text-transform: uppercase;letter-spacing: 0.5px;}
-    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,0.1)}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
     .nav-item.active{background:#fff;color:#0B3A66;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
     .nav-item .hint{font-size:11px;opacity:0.7}
     .nav-item.active .hint{color:var(--muted);opacity:1}
     .chevron-icon { width: 16px; height: 16px; flex-shrink: 0; stroke-width: 3; stroke: currentColor; fill:none;}
 
+    /* Content Area */
     .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
     .section-header{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+    .section-header h2{margin:0;font-size:22px}
+    .section-header .desc{color:var(--muted);font-size:13px}
+
+    /* KPI Cards */
     .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
     .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;text-transform:uppercase}
     .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
-    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;width:380px}
+
+    /* Panel and Analytics */
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;width:380px;outline:none}
     .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;text-align:center;padding:12px}
     .viz.map{height:350px; margin-bottom: 24px}
     .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
@@ -90,29 +108,35 @@
   <div class="layout">
     <aside class="sidenav">
       <div class="nav-title">Assessment Areas</div>
+      
       <div class="nav-item active" data-section="outcomes">
         <div><div class="label">Learning Outcomes</div><div class="hint">Grade 3 Proficiency</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="quality">
         <div><div class="label">Teaching Quality</div><div class="hint">Training & Pedagogy</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="leadership">
         <div><div class="label">Leadership & Mgmt</div><div class="hint">Principals & SMS</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="environment">
         <div><div class="label">Support Environment</div><div class="hint">Textbooks & Parents</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="equity">
         <div><div class="label">Equity & Access</div><div class="hint">WASH & Infrastructure</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+
       <div class="nav-item" data-section="skills">
         <div><div class="label">Skills Part</div><div class="hint">....</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </aside>
 
@@ -126,10 +150,14 @@
 
       <section class="panel">
         <div class="panel-header">
-          <h3 style="margin:0; font-size:16px; color:var(--brand)">Map View</h3>
-          <div class="indicator-control"><select id="mapIndicatorSel"></select></div>
+          <h3 style="margin:0; font-size:16px; color:var(--brand)">Provincial Map View</h3>
+          <div class="indicator-control">
+            <select id="mapIndicatorSel"></select>
+          </div>
         </div>
-        <div class="viz map" id="mapViz">Map Data</div>
+
+        <div class="viz map" id="mapViz">Map Data Visualization</div>
+
         <h3 style="margin:0 0 15px; font-size:16px; color:var(--brand)">Detailed Analytics</h3>
         <div class="chart-grid" id="chartStack"></div>
       </section>
@@ -137,8 +165,18 @@
   </div>
 
   <script>
-    const PAGE_URLS = { overview: "index.html", learning: "learning.html", administrative: "administrative.html", survey: "survey.html", expenditure: "expenditure.html", results: "results.html" };
-    document.querySelectorAll("#topTabs .tab").forEach(t=>{ t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page]; });
+    const PAGE_URLS = { 
+        overview: "index.html", 
+        learning: "learning.html", 
+        administrative: "administrative.html", 
+        survey: "survey.html", 
+        expenditure: "expenditure.html", 
+        results: "results.html" 
+    };
+
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{
+      t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
+    });
 
     const DATA = {
       outcomes: {
@@ -173,7 +211,7 @@
       },
       skills: {
         title: "Skills Part",
-        desc: "....",
+        desc: "Further data on technical and vocational skills acquisition.",
         kpis: [], 
         indicators: [] 
       }
@@ -183,13 +221,23 @@
       const d = DATA[key];
       document.getElementById("sectionTitle").textContent = d.title;
       document.getElementById("sectionDesc").textContent = d.desc;
-      const kRow = document.getElementById("kpiRow"); kRow.innerHTML = "";
+      
+      const kRow = document.getElementById("kpiRow"); 
+      kRow.innerHTML = "";
       d.kpis.forEach(k => { kRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div></div>`; });
-      const sel = document.getElementById("mapIndicatorSel"); sel.innerHTML = "";
+      
+      const sel = document.getElementById("mapIndicatorSel"); 
+      sel.innerHTML = "";
       d.indicators.forEach(ind => { const opt = document.createElement("option"); opt.value = ind; opt.textContent = ind; sel.appendChild(opt); });
-      const stack = document.getElementById("chartStack"); stack.innerHTML = "";
-      d.indicators.forEach((ind, i) => { stack.innerHTML += `<div class="chart-container"><div class="chart-label">${i+1}. ${ind}</div><div class="viz chart">Data visualization pending...</div></div>`; });
-      document.getElementById("mapViz").textContent = d.indicators.length > 0 ? "Select an indicator to view map data." : "No data available for this section.";
+      
+      const stack = document.getElementById("chartStack"); 
+      stack.innerHTML = "";
+      d.indicators.forEach((ind, i) => { 
+        stack.innerHTML += `<div class="chart-container"><div class="chart-label">${i+1}. ${ind}</div><div class="viz chart">Data visualization pending...</div></div>`; 
+      });
+      
+      const mapViz = document.getElementById("mapViz");
+      mapViz.textContent = d.indicators.length > 0 ? "Map visualization active for indicators." : "No indicators available for this section.";
     }
 
     document.querySelectorAll(".nav-item").forEach(item => {
@@ -199,6 +247,7 @@
         render(item.dataset.section);
       };
     });
+
     render("outcomes");
   </script>
 </body>
