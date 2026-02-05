@@ -10,12 +10,14 @@
       --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
       --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      
+      /* LASER Branding Colors */
+      --l-color: #00A88E; --a-color: #E31C52; --s-color: #78BE20; --e-color: #FF8200; --r-color: #0072CE;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
 
-    /* Header */
     .topbar{height:72px;background:var(--brand-2);display:flex;align-items:center;padding:0 22px;gap:18px;color:#fff}
     .title{font-weight:900;font-size:18px;line-height:1.1}
     .subtitle{font-size:12px;opacity:.92;margin-top:3px}
@@ -23,59 +25,43 @@
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
 
-    /* LASER Navigation Tabs */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
-    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
+    .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
-    .tab b { color: #0B5FA5; margin-right:4px }
-    .tab.active b { color: #fff; opacity:0.8 }
 
-    /* Layout */
+    /* LASER Colors */
+    .tab b { font-size: 15px; margin-right: 2px; }
+    .tab .l-text { color: var(--l-color); }
+    .tab .a-text { color: var(--a-color); }
+    .tab .s-text { color: var(--s-color); }
+    .tab .e-text { color: var(--e-color); }
+    .tab .r-text { color: var(--r-color); }
+    .tab.active b { filter: brightness(1.2) contrast(1.2); }
+
     .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
-
-    /* Sidenav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
     .nav-title{font-weight:900;font-size:13px;opacity:.8;margin-bottom:12px;text-transform: uppercase;letter-spacing: 0.5px;}
-    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,0.1)}
     .nav-item.active{background:#fff;color:#0B3A66;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
     .nav-item .hint{font-size:11px;opacity:0.7}
     .nav-item.active .hint{color:var(--muted);opacity:1}
     .chevron-icon { width: 16px; height: 16px; flex-shrink: 0; stroke-width: 3; stroke: currentColor; fill:none;}
 
-    /* Content Area */
     .content{padding:16px;display:flex;flex-direction:column;gap:var(--gap)}
     .section-header{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
-    .section-header h2{margin:0;font-size:22px}
-    .section-header .desc{color:var(--muted);font-size:13px}
-
-    /* KPI Cards */
     .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
-    .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+    .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;text-transform:uppercase}
     .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
-    .kpi-sub{color:var(--muted);font-size:11px;margin-top:2px}
-
-    /* Main Panel */
-    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
-    .panel h3{margin:0 0 15px;font-size:17px;color:var(--brand)}
-    .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;outline:none;width:380px}
-
-    .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
-      display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
-    
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+    .indicator-control select{background:#fff;border:1px solid rgba(11,31,51,.16);border-radius:10px;padding:8px 10px;font-weight:900;color:#0B3A66;width:380px}
+    .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;text-align:center;padding:12px}
     .viz.map{height:350px; margin-bottom: 24px}
-
-    /* Grid for Charts */
     .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
     .chart-container{display:flex; flex-direction: column; gap: 8px}
     .chart-label{font-size: 13px; font-weight: 800; color: var(--brand)}
     .viz.chart{height:150px}
-
-    .note{color:var(--muted);font-size:11px;margin-top:15px;line-height:1.4;font-style: italic; border-top: 1px solid #eee; padding-top: 10px;}
-
-    @media (max-width:1200px){ .chart-grid{grid-template-columns:1fr} .cards{grid-template-columns:repeat(3, 1fr)} }
   </style>
 </head>
 <body>
@@ -94,233 +80,116 @@
 
   <div class="tabs" id="topTabs">
     <div class="tab" data-page="overview">Overview</div>
-    <div class="tab active" data-page="learning"><b>(L)</b> Learning</div>
-    <div class="tab" data-page="administrative"><b>(A)</b> Administrative</div>
-    <div class="tab" data-page="survey"><b>(S)</b> Survey</div>
-    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
-    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
+    <div class="tab active" data-page="learning"><b class="l-text">L</b>earning</div>
+    <div class="tab" data-page="administrative"><b class="a-text">A</b>dministrative</div>
+    <div class="tab" data-page="survey"><b class="s-text">S</b>urvey</div>
+    <div class="tab" data-page="expenditure"><b class="e-text">E</b>xpenditure</div>
+    <div class="tab" data-page="results"><b class="r-text">R</b>esults Monitoring</div>
   </div>
 
   <div class="layout">
     <aside class="sidenav">
       <div class="nav-title">Assessment Areas</div>
-      
       <div class="nav-item active" data-section="outcomes">
-        <div>
-          <div class="label">Learning Outcomes</div>
-          <div class="hint">Grade 3 Proficiency Metrics</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Learning Outcomes</div><div class="hint">Grade 3 Proficiency</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
-
       <div class="nav-item" data-section="quality">
-        <div>
-          <div class="label">Teaching Quality</div>
-          <div class="hint">Proficiency, Training & ICT</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Teaching Quality</div><div class="hint">Training & Pedagogy</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
-
       <div class="nav-item" data-section="leadership">
-        <div>
-          <div class="label">Leadership & Mgmt</div>
-          <div class="hint">Principal Degrees & SMS/PTA</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Leadership & Mgmt</div><div class="hint">Principals & SMS</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
-
       <div class="nav-item" data-section="environment">
-        <div>
-          <div class="label">Support Environment</div>
-          <div class="hint">Textbooks, Parents & SES</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Support Environment</div><div class="hint">Textbooks & Parents</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
-
       <div class="nav-item" data-section="equity">
-        <div>
-          <div class="label">Equity & Access</div>
-          <div class="hint">WASH, Infrastructure & Safety</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Equity & Access</div><div class="hint">WASH & Infrastructure</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
-
       <div class="nav-item" data-section="skills">
-        <div>
-          <div class="label">Skills Development</div>
-          <div class="hint">TVET & Vocational Outcomes</div>
-        </div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="label">Skills Part</div><div class="hint">....</div></div>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6"/></svg>
       </div>
     </aside>
 
     <main class="content">
       <div class="section-header">
         <h2 id="sectionTitle">Learning Outcomes</h2>
-        <div class="desc" id="sectionDesc">Standardized assessment results for Grade 3 Literacy and Math.</div>
+        <div class="desc" id="sectionDesc">Standardized assessment results.</div>
       </div>
 
       <div class="cards" id="kpiRow"></div>
 
       <section class="panel">
         <div class="panel-header">
-          <h3 style="margin:0; font-size:16px; color:var(--brand)" id="mapTitle">Regional Proficiency Heatmap</h3>
-          <div class="indicator-control">
-            <select id="mapIndicatorSel"></select>
-          </div>
+          <h3 style="margin:0; font-size:16px; color:var(--brand)">Map View</h3>
+          <div class="indicator-control"><select id="mapIndicatorSel"></select></div>
         </div>
-
-        <div class="viz map" id="mapViz">Geographic Performance Layer</div>
-
-        <h3 style="margin:0 0 15px; font-size:16px; color:var(--brand)">Detailed Performance Analytics</h3>
+        <div class="viz map" id="mapViz">Map Data</div>
+        <h3 style="margin:0 0 15px; font-size:16px; color:var(--brand)">Detailed Analytics</h3>
         <div class="chart-grid" id="chartStack"></div>
-        
-        <div class="note" id="detailsNote">
-            <b>Assessment Framework:</b> Learning metrics based on Grade 3 field assessments. 
-            Equity indicators cross-referenced with school facility reports.
-        </div>
       </section>
     </main>
   </div>
 
   <script>
     const PAGE_URLS = { overview: "index.html", learning: "learning.html", administrative: "administrative.html", survey: "survey.html", expenditure: "expenditure.html", results: "results.html" };
-    
-    document.querySelectorAll("#topTabs .tab").forEach(t=>{
-      t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
-    });
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{ t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page]; });
 
     const DATA = {
       outcomes: {
         title: "Learning Outcomes",
         desc: "Grade 3 proficiency levels across Literacy and Mathematics.",
         kpis: [{n:"Lit Prof (Dari)", v:"42%"}, {n:"Lit Prof (Pashto)", v:"39%"}, {n:"Math Prof", v:"35%"}, {n:"Gender Gap", v:"-12%"}, {n:"Rural Avg", v:"31%"}],
-        indicators: [
-          "% Grade 3 proficient in literacy/reading (Dari/Pashto)",
-          "Proficiency disaggregated by gender",
-          "Proficiency by province heatmap",
-          "Proficiency by climate and language taught",
-          "% Grade 3 proficient in Math",
-          "Math proficiency by gender and province",
-          "Math proficiency by climate/language",
-          "Correlation: Language Taught vs Mother Tongue",
-          "Top Performing Provinces (Grade 3)",
-          "Low Performing Provinces (Grade 3)"
-        ]
+        indicators: ["% Grade 3 proficient in literacy/reading (Dari/Pashto)", "Proficiency disaggregated by gender", "Proficiency by province heatmap", "Proficiency by climate and language taught", "% Grade 3 proficient in Math"]
       },
       quality: {
         title: "Teaching Quality",
         desc: "Teacher subject knowledge and classroom pedagogical practices.",
         kpis: [{n:"Subj Proficiency", v:"68%"}, {n:"Recent Training", v:"44%"}, {n:"ICT Usage", v:"12%"}, {n:"PTR (Gr 3)", v:"38:1"}, {n:"TLM Usage", v:"52%"}],
-        indicators: [
-          "% teachers reaching proficiency in subject knowledge (math/lang)",
-          "% teachers received training in the past year",
-          "Impact: Training vs Student performance",
-          "Gap: Training needs expressed vs received",
-          "% teachers using formative assessment",
-          "% teachers using ICT in classrooms",
-          "% teachers using Teaching Learning Materials (TLMs)",
-          "Teacher-student ratio (PTR, Grade 3 specific)",
-          "Teachers' education level vs student performance",
-          "Teacher Subject Knowledge by Gender"
-        ]
+        indicators: ["% teachers reaching proficiency in subject knowledge", "% teachers received training in the past year", "Impact: Training vs Student performance", "% teachers using formative assessment", "% teachers using ICT in classrooms"]
       },
       leadership: {
         title: "Leadership & Management",
         desc: "Administrative capacity and instructional supervision impact.",
         kpis: [{n:"Uni Degrees", v:"72%"}, {n:"Observation", v:"41%"}, {n:"SMS Coverage", v:"88%"}, {n:"PTA Coverage", v:"85%"}, {n:"Feedback Freq", v:"Weekly"}],
-        indicators: [
-          "% principals with university degrees",
-          "Impact: Principal degree vs Student performance",
-          "% principals who regularly observe instruction",
-          "Impact: Observation vs Student performance",
-          "% schools with both SMS and PTA",
-          "Principal Gender Distribution",
-          "Instructional Feedback frequency",
-          "Governance Status by Province",
-          "Supervision Visit Consistency",
-          "Administrative vs Instructional time split"
-        ]
+        indicators: ["% principals with university degrees", "Impact: Principal degree vs Student performance", "% principals who regularly observe instruction", "% schools with both SMS and PTA"]
       },
       environment: {
         title: "Learning Environment & Support",
-        desc: "Student home context, parental support, and resource availability.",
+        desc: "Student home context and resource availability.",
         kpis: [{n:"Textbook Access", v:"61%"}, {n:"Parent Support", v:"48%"}, {n:"Home Labor", v:"14%"}, {n:"Parent Literacy", v:"39%"}, {n:"SES Impact", v:"High"}],
-        indicators: [
-          "% students with textbooks vs learning proficiency",
-          "% students receiving regular teacher feedback",
-          "Impact: Parent education vs Student performance",
-          "% students receiving parental support",
-          "Correlation: Family SES vs Literacy/Math",
-          "% students who work after school (labour) vs proficiency",
-          "After-school study hours average",
-          "Homework check frequency",
-          "Access to learning materials at home",
-          "Distance to school vs attendance"
-        ]
+        indicators: ["% students with textbooks vs learning proficiency", "% students receiving regular teacher feedback", "Impact: Parent education vs Student performance", "% students receiving parental support"]
       },
       equity: {
         title: "Equity and Access",
-        desc: "Physical infrastructure, safety, and school facility standards.",
+        desc: "Physical infrastructure and safety standards.",
         kpis: [{n:"Func Toilets", v:"58%"}, {n:"Safe Water", v:"62%"}, {n:"Road Access", v:"44%"}, {n:"Safety Sense", v:"78%"}, {n:"Electricity", v:"24%"}],
-        indicators: [
-          "% schools with functional gender-segregated toilets",
-          "% schools with safe drinking water",
-          "% schools accessible by proper roads (asphalt/gravel)",
-          "% schools with boundary walls",
-          "% students reporting they feel safe at school",
-          "% schools with access to electricity",
-          "Access to computers and internet",
-          "PTR Equity across provinces",
-          "Infrastructure Gap (Rural vs Urban)",
-          "Safe Learning Environment Index"
-        ]
+        indicators: ["% schools with functional gender-segregated toilets", "% schools with safe drinking water", "% schools accessible by proper roads", "% schools with boundary walls", "% students reporting they feel safe at school"]
       },
       skills: {
-        title: "Skills Development",
-        desc: "Vocational outcomes and TVET sector competency benchmarks.",
-        kpis: [{n:"Grad Rate", v:"74%"}, {n:"Job Placement", v:"31%"}, {n:"Trade Certs", v:"2.4k"}, {n:"Female Skills", v:"22%"}, {n:"Industry Link", v:"Low"}],
-        indicators: [
-          "TVET Student Proficiency Levels",
-          "Competency-based assessment results",
-          "Employment rates post-graduation",
-          "Technical skill mastery by trade type",
-          "Industry-aligned curriculum coverage",
-          "Skills acquisition gender gap"
-        ]
+        title: "Skills Part",
+        desc: "....",
+        kpis: [], 
+        indicators: [] 
       }
     };
 
-    function render(sectionKey) {
-      const d = DATA[sectionKey];
+    function render(key) {
+      const d = DATA[key];
       document.getElementById("sectionTitle").textContent = d.title;
       document.getElementById("sectionDesc").textContent = d.desc;
-      
-      const kRow = document.getElementById("kpiRow");
-      kRow.innerHTML = "";
-      d.kpis.forEach(k => {
-        kRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div><div class="kpi-sub">National Avg</div></div>`;
-      });
-
-      const sel = document.getElementById("mapIndicatorSel");
-      sel.innerHTML = "";
-      d.indicators.forEach(ind => {
-        const opt = document.createElement("option");
-        opt.value = ind; opt.textContent = ind;
-        sel.appendChild(opt);
-      });
-
-      const stack = document.getElementById("chartStack");
-      stack.innerHTML = "";
-      d.indicators.forEach((ind, i) => {
-        const container = document.createElement("div");
-        container.className = "chart-container";
-        container.innerHTML = `<div class="chart-label">${i+1}. ${ind}</div><div class="viz chart">Assessment Data:\n${ind}</div>`;
-        stack.appendChild(container);
-      });
-
-      sel.onchange = () => document.getElementById("mapViz").textContent = `Provincial Heatmap:\n${sel.value}`;
-      sel.onchange();
+      const kRow = document.getElementById("kpiRow"); kRow.innerHTML = "";
+      d.kpis.forEach(k => { kRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div></div>`; });
+      const sel = document.getElementById("mapIndicatorSel"); sel.innerHTML = "";
+      d.indicators.forEach(ind => { const opt = document.createElement("option"); opt.value = ind; opt.textContent = ind; sel.appendChild(opt); });
+      const stack = document.getElementById("chartStack"); stack.innerHTML = "";
+      d.indicators.forEach((ind, i) => { stack.innerHTML += `<div class="chart-container"><div class="chart-label">${i+1}. ${ind}</div><div class="viz chart">Data visualization pending...</div></div>`; });
+      document.getElementById("mapViz").textContent = d.indicators.length > 0 ? "Select an indicator to view map data." : "No data available for this section.";
     }
 
     document.querySelectorAll(".nav-item").forEach(item => {
@@ -330,7 +199,6 @@
         render(item.dataset.section);
       };
     });
-
     render("outcomes");
   </script>
 </body>
