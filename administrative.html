@@ -10,6 +10,8 @@
       --card:#FFFFFF; --border:#BBD6EA; --tab:#CFE5F7; --active:#0078D4;
       --shadow:0 6px 18px rgba(11,31,51,.08); --radius:14px; --gap:14px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      /* LASER Branding Colors */
+      --l-color: #00A88E; --a-color: #E31C52; --s-color: #78BE20; --e-color: #FF8200; --r-color: #0072CE;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -23,12 +25,19 @@
     .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap}
     .chip select{background:transparent;border:none;color:#fff;font-weight:900;outline:none;cursor:pointer}
 
-    /* LASER Navigation Tabs */
+    /* Tabs Navigation */
     .tabs{padding:10px 14px;display:flex;gap:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,.06);background:#D9EDFB}
     .tab{background:var(--tab);border:1px solid rgba(11,31,51,.12);padding:10px 14px;border-radius:12px;font-weight:900;color:#0B3A66;user-select:none;font-size:13px;cursor:pointer;transition:all 0.2s}
     .tab.active{background:var(--active);color:#fff;border-color:transparent;box-shadow:var(--shadow)}
-    .tab b { color: #0B5FA5; margin-right:4px }
-    .tab.active b { color: #fff; opacity:0.8 }
+
+    /* LASER Colors */
+    .tab b { font-size: 15px; margin-right: 2px; }
+    .tab .l-text { color: var(--l-color); }
+    .tab .a-text { color: var(--a-color); }
+    .tab .s-text { color: var(--s-color); }
+    .tab .e-text { color: var(--e-color); }
+    .tab .r-text { color: var(--r-color); }
+    .tab.active b { filter: brightness(1.2) contrast(1.2); }
 
     /* Layout */
     .layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 72px - 54px)}
@@ -36,7 +45,7 @@
     /* Sidenav */
     .sidenav{background:var(--brand);padding:16px;color:#fff}
     .nav-title{font-weight:900;font-size:13px;opacity:.8;margin-bottom:12px;text-transform: uppercase;letter-spacing: 0.5px;}
-    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;user-select:none;display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
+    .nav-item{border-radius:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
     .nav-item.active{background:#fff;color:#0B3A66;box-shadow:var(--shadow)}
     .nav-item .label{font-weight:900;font-size:13px}
     .nav-item .hint{font-size:11px;opacity:0.7}
@@ -59,7 +68,6 @@
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
     .kpi-title{font-weight:900;color:#0B3A66;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
     .kpi-value{font-weight:1000;font-size:24px;margin-top:6px;color:var(--brand-2)}
-    .kpi-sub{color:var(--muted);font-size:11px;margin-top:2px}
 
     /* Main Panel */
     .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
@@ -68,18 +76,13 @@
 
     .viz{border:1px dashed rgba(11,31,51,.28);border-radius:12px;background:linear-gradient(180deg, rgba(234,243,251,.55), rgba(234,243,251,.12));
       display:flex;align-items:center;justify-content:center;color:rgba(11,31,51,.58);font-weight:700;font-size:13px;text-align:center;padding:12px;white-space:pre-line}
-    
     .viz.map{height:350px; margin-bottom: 24px}
 
-    /* Grid for Charts */
     .chart-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:16px}
     .chart-container{display:flex; flex-direction: column; gap: 8px}
     .chart-label{font-size: 12px; font-weight: 800; color: var(--brand)}
     .viz.chart{height:150px}
-
     .note{color:var(--muted);font-size:11px;margin-top:15px;font-style: italic; border-top: 1px solid #eee; padding-top: 10px;}
-
-    @media (max-width:1200px){ .chart-grid{grid-template-columns:1fr} .cards{grid-template-columns:repeat(3, 1fr)} }
   </style>
 </head>
 <body>
@@ -91,57 +94,51 @@
     </div>
     <div class="spacer"></div>
     <div style="display:flex; gap:10px; align-items:center">
-      <div class="chip"><b>Year</b> <select><option>2024</option><option>2021</option></select></div>
+      <div class="chip"><b>Year</b> <select><option>2024</option></select></div>
       <div class="chip"><b>Province</b> <select><option>All Provinces</option></select></div>
     </div>
   </div>
 
   <div class="tabs" id="topTabs">
     <div class="tab" data-page="overview">Overview</div>
-    <div class="tab" data-page="learning"><b>(L)</b> Learning</div>
-    <div class="tab active" data-page="administrative"><b>(A)</b> Administrative</div>
-    <div class="tab" data-page="survey"><b>(S)</b> Survey</div>
-    <div class="tab" data-page="expenditure"><b>(E)</b> Expenditure</div>
-    <div class="tab" data-page="results"><b>(R)</b> Results Monitoring</div>
+    <div class="tab" data-page="learning"><b class="l-text">L</b>earning</div>
+    <!-- CORRECTED ACTIVE TAB -->
+    <div class="tab active" data-page="administrative"><b class="a-text">A</b>dministrative</div>
+    <div class="tab" data-page="survey"><b class="s-text">S</b>urvey</div>
+    <div class="tab" data-page="expenditure"><b class="e-text">E</b>xpenditure</div>
+    <div class="tab" data-page="results"><b class="r-text">R</b>esults Monitoring</div>
   </div>
 
   <div class="layout">
     <aside class="sidenav">
       <div class="nav-title">System Categories</div>
-      
       <div class="nav-item active" data-section="ge">
         <div><div class="label">General Education (GE)</div><div class="hint">Schools, Students, Teachers</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="sdg">
         <div><div class="label">SDG 4 Indicators</div><div class="hint">Parity, GER, NER, Completion</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="cbe">
         <div><div class="label">Community-Based (CBE)</div><div class="hint">Classes, Learners, Teachers</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="alp">
         <div><div class="label">Accelerated Learning (ALP)</div><div class="hint">Classes, Enrollment, Ratios</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="tvet">
         <div><div class="label">TVET</div><div class="hint">Institutions & Enrollment</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="ie">
         <div><div class="label">Islamic Education</div><div class="hint">Madrassas, Staff, Students</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
       <div class="nav-item" data-section="he">
         <div><div class="label">Higher Education (HE)</div><div class="hint">Universities & Academic Staff</div></div>
-        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </aside>
 
@@ -151,35 +148,23 @@
         <div class="desc" id="sectionDesc">System inputs, structure, and capacity indicators.</div>
         <div class="subtabs" id="subtabs"></div>
       </div>
-
       <div class="cards" id="kpiRow"></div>
-
       <section class="panel">
         <div class="panel-header">
           <h3 style="margin:0; font-size:16px; color:var(--brand)" id="mapTitle">Provincial Map View</h3>
-          <div class="indicator-control">
-            <select id="mapIndicatorSel"></select>
-          </div>
+          <div class="indicator-control"><select id="mapIndicatorSel"></select></div>
         </div>
-
         <div class="viz map" id="mapViz">Geographic Data Layer (Map)</div>
-
         <h3 style="margin:0 0 15px; font-size:16px; color:var(--brand)">Detailed Analytics</h3>
         <div class="chart-grid" id="chartStack"></div>
-        
-        <div class="note" id="detailsNote">
-            <b>Integrated Framework:</b> Data harmonized from MoE, MoHE, TVET, NSIA, and EMIS reporting.
-        </div>
+        <div class="note"><b>Integrated Framework:</b> Data harmonized from MoE, MoHE, TVET, NSIA, and EMIS reporting.</div>
       </section>
     </main>
   </div>
 
   <script>
     const PAGE_URLS = { overview: "index.html", learning: "learning.html", administrative: "administrative.html", survey: "survey.html", expenditure: "expenditure.html", results: "results.html" };
-    
-    document.querySelectorAll("#topTabs .tab").forEach(t=>{
-      t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page];
-    });
+    document.querySelectorAll("#topTabs .tab").forEach(t=>{ t.onclick = ()=> window.location.href = PAGE_URLS[t.dataset.page]; });
 
     const DATA = {
       ge: {
@@ -296,7 +281,6 @@
       container.innerHTML = "";
       const sec = DATA[secKey];
       currentSubtab = sec.subtabs[0];
-
       sec.subtabs.forEach(st => {
         const div = document.createElement("div");
         div.className = "subtab" + (st === currentSubtab ? " active" : "");
@@ -316,34 +300,12 @@
       const sub = sec.content[currentSubtab];
       document.getElementById("sectionTitle").textContent = sec.title;
       document.getElementById("sectionDesc").textContent = sec.desc;
-
-      // KPIs
-      const kpiRow = document.getElementById("kpiRow");
-      kpiRow.innerHTML = "";
-      sub.kpis.forEach(k => {
-        kpiRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div><div class="kpi-sub">National 2024</div></div>`;
-      });
-
-      // Map Dropdown
-      const sel = document.getElementById("mapIndicatorSel");
-      sel.innerHTML = "";
-      sub.maps.forEach(m => {
-        const opt = document.createElement("option");
-        opt.value = m; opt.textContent = m;
-        sel.appendChild(opt);
-      });
-
-      // Charts
-      const stack = document.getElementById("chartStack");
-      stack.innerHTML = "";
-      sub.charts.forEach((c, i) => {
-        stack.innerHTML += `
-          <div class="chart-container">
-            <div class="chart-label">${i+1}. ${c}</div>
-            <div class="viz chart">Chart Visualization: ${c}</div>
-          </div>
-        `;
-      });
+      const kpiRow = document.getElementById("kpiRow"); kpiRow.innerHTML = "";
+      sub.kpis.forEach(k => { kpiRow.innerHTML += `<div class="card"><div class="kpi-title">${k.n}</div><div class="kpi-value">${k.v}</div></div>`; });
+      const sel = document.getElementById("mapIndicatorSel"); sel.innerHTML = "";
+      sub.maps.forEach(m => { const opt = document.createElement("option"); opt.value = m; opt.textContent = m; sel.appendChild(opt); });
+      const stack = document.getElementById("chartStack"); stack.innerHTML = "";
+      sub.charts.forEach((c, i) => { stack.innerHTML += `<div class="chart-container"><div class="chart-label">${i+1}. ${c}</div><div class="viz chart">Visual Placeholder</div></div>`; });
     }
 
     document.querySelectorAll(".nav-item").forEach(item => {
@@ -355,8 +317,6 @@
         updateContent();
       };
     });
-
-    // Initialize
     renderSubtabs("ge");
     updateContent();
   </script>
